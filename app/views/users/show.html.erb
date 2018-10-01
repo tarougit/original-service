@@ -1,0 +1,62 @@
+<div class="row">
+  <aside class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+      </div>
+      <div class="panel-body">
+        <img class="media-object img-rounded img-responsive" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
+        <h2 class="center"><%= @user.name %></h2>
+      </div>
+       <ul class="nav nav-pills nav-stacked">
+<!--        	<li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
+        	<li role="presentation" ><a href="#">個人参加募集</a></li>
+        	<li role="presentation"><a href="#">個人参加応募</a></li>
+
+          <%# if  current_user.lastmatchday <= 7 %>
+        	<li role="presentation"><a href="#">プレイヤーを評価する</a></li>
+        	<%# end %>
+    			<li role="presentation" class="divider"></li>
+        	<li role="presentation"><a href="#">
+        	    <span class="glyphicon glyphicon-cog"></span> 設定
+        	    </a></li>
+
+        </ul>
+    </div>
+  </aside>
+  <div class="col-xs-8">
+    <ul class="nav nav-tabs nav-justified">
+      <!--レーダーチャートを描画する Canvas-->
+    <canvas id="canvas" width="300px" height="300px">
+    </canvas>
+
+    <script src="jquery-2.0.1.js"></script>
+    <script src="Chart.js"></script>
+    <script>
+      $(function() {
+        // レーダーチャートで表示するデータを用意
+        var radarChartData = {
+          labels: ["スタミナ", "スピード", "テクニック", "パワー", "メンタル"],
+          datasets: [
+            {
+              fillColor: "rgba(151,187,205,0.5)", // 線で囲まれた部分の色
+              strokeColor: "rgba(151,187,205,1)", // 線の色
+              pointColor: "rgba(151,187,205,1)",  // 点の色
+              pointStrokeColor: "#fff",           // 点を囲む線の色
+              data: [7,8,10,6,10]
+            }
+          ]
+        };
+
+        // Canvas にレーダーチャートを描画
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var chart = new Chart(context);
+        var rader = chart.Radar(radarChartData, {
+          scaleShowLabels: true,  // 目盛を表示
+          pointLabelFontSize : 10 // ラベルを表示
+        });
+      });
+    </script>
+    </ul>
+  </div>
+</div>
