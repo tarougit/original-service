@@ -31,6 +31,11 @@ class UsersController < ApplicationController
   end
   
   def destroy
+    @user = User.destroy(user_params)
+    
+      @user.delete
+      flash[:success] = '退会しました'
+      redirect_to root_url
   end
   
   private

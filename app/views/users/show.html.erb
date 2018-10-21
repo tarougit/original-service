@@ -2,61 +2,148 @@
   <aside class="col-xs-4">
     <div class="panel panel-default">
       <div class="panel-heading">
+        <div class="center">プロフィール</div>
       </div>
       <div class="panel-body">
         <img class="media-object img-rounded img-responsive" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
         <h2 class="center"><%= @user.name %></h2>
+        <!-- ここから公開設定によって表示、非表示 -->
+        <h2 class="center">性　別</h2>
+        <h2 class="center">年　齢</h2>
+        <!-- ここまで公開設定 -->
+        <h2 class="center">活動エリア</h2>
+        <h2 class="center">主催者評価：100</h2>
       </div>
        <ul class="nav nav-pills nav-stacked">
 <!--        	<li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
         	<li role="presentation" ><a href="#">個人参加募集</a></li>
         	<li role="presentation"><a href="#">個人参加応募</a></li>
 
-          <%# if  current_user.lastmatchday <= 7 %>
-        	<li role="presentation"><a href="#">プレイヤーを評価する</a></li>
-        	<%# end %>
     			<li role="presentation" class="divider"></li>
         	<li role="presentation"><a href="#">
-        	    <span class="glyphicon glyphicon-cog"></span> 設定
-        	    </a></li>
-
+        	    <span class="glyphicon glyphicon-cog"></span> 設定</a></li>
+        	<%# if  current_user.lastmatchday <= 7 %>
+        	<li role="presentation"><a href="#">プレイヤーを評価する</a></li>
+        	<%# end %>
+        	<%# if  current_user.lastmatchday <= 7 %>
+        	<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>
+        	<%# end %>
         </ul>
     </div>
   </aside>
   <div class="col-xs-8">
-    <ul class="nav nav-tabs nav-justified">
-      <!--レーダーチャートを描画する Canvas-->
-    <canvas id="canvas" width="300px" height="300px">
-    </canvas>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="center">ステータスグラフ</div>
+      </div>
+      
+      <div class="panel-heading">
+        <div style="float:center; width:50%;"><a href="#">サッカー</a></div>
+      </div>
+      <div class="panel-heading">
+        <div style="float:center; width:50%;"><a href="#">フットサル</a></div>
+      </div>
+      <div class="right">参加レベル：<%#= 5中級 %></div>
+      <div class="right">通算ゲーム数：<%#= 100 %></div>
+    </div>
+        
 
-    <script src="jquery-2.0.1.js"></script>
-    <script src="Chart.js"></script>
-    <script>
-      $(function() {
-        // レーダーチャートで表示するデータを用意
-        var radarChartData = {
-          labels: ["スタミナ", "スピード", "テクニック", "パワー", "メンタル"],
-          datasets: [
-            {
-              fillColor: "rgba(151,187,205,0.5)", // 線で囲まれた部分の色
-              strokeColor: "rgba(151,187,205,1)", // 線の色
-              pointColor: "rgba(151,187,205,1)",  // 点の色
-              pointStrokeColor: "#fff",           // 点を囲む線の色
-              data: [7,8,10,6,10]
-            }
-          ]
-        };
+          <div class="panel-body">
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+                      <!--レーダーチャートを描画する Canvas-->
+              <!-- チャート描画キャンバス -->
+              <div><canvas id="myChart"></canvas></div>
 
-        // Canvas にレーダーチャートを描画
-        var canvas = document.getElementById("canvas");
-        var context = canvas.getContext("2d");
-        var chart = new Chart(context);
-        var rader = chart.Radar(radarChartData, {
-          scaleShowLabels: true,  // 目盛を表示
-          pointLabelFontSize : 10 // ラベルを表示
-        });
-      });
-    </script>
-    </ul>
+         </div>
+    </div>
+</div>
+  <div class="col-xs-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="center">出場大会</div>
+      </div>
+
+          <div class="panel-body">
+              <p>全国大会</p>
+          </div>
+      </div>
+  </div>
+  <div class="col-xs-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="center">経　歴</div>
+      </div>
+
+          <div class="panel-body">
+              <p>2010~2012 FC東京U-18所属</p>
+          </div>
+      </div>
   </div>
 </div>
+
+<div class="row">
+  <aside class="col-xs-10">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="center">募集中</div>
+      </div>
+      <div class="panel-body">
+        
+      </div>
+    </div>
+  </aside>
+</div>
+<div class="row">
+  <aside class="col-xs-10">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="center">応募確定</div>
+      </div>
+      <div class="panel-body">
+        
+      </div>
+    </div>
+  </aside>
+</div>
+
+
+
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myRadarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+        labels: ["パ　ス", "ドリブル", "シュート", "ボディコントロール", "状況判断", "戦術理解"],
+        datasets: [{
+            label: 'ステータス',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
