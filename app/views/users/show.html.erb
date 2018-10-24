@@ -106,14 +106,14 @@
   </aside>
 </div>
 
-
+<canvas id="testCanvas">
 
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
 var myRadarChart = new Chart(ctx, {
     type: 'radar',
     data: {
-        labels: ["パ　ス", "ドリブル", "シュート", "ボディコントロール", "状況判断", "戦術理解"],
+        labels: ["パ　ス", "ドリブル", "シュート", "ボディコントロール", "状況判断", "スピード"],
         datasets: [{
             label: 'ステータス',
             data: [12, 19, 3, 5, 2, 3],
@@ -136,14 +136,18 @@ var myRadarChart = new Chart(ctx, {
             borderWidth: 1
         }]
     },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
+  options: {
+    scale: {
+      pointLabels: {
+        fontSize: 15 //フォントサイズ
+      },
+      ticks: { //http://www.chartjs.org/docs/#scales-radial-linear-scale
+        stepSize: 1, // 目盛の間隔
+        max: 20, //最大値
+        beginAtZero: true
+      }
     }
+  }
 });
 </script>
+

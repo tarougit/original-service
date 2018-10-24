@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180930024141) do
+ActiveRecord::Schema.define(version: 20181024143056) do
+
+  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "sports"
+    t.string   "title"
+    t.text     "content",     limit: 65535
+    t.date     "event_date"
+    t.time     "open"
+    t.time     "closed"
+    t.date     "due_date"
+    t.time     "due_time"
+    t.string   "erea"
+    t.string   "place"
+    t.integer  "capacity"
+    t.integer  "cost"
+    t.string   "level"
+    t.integer  "age_minimum"
+    t.integer  "age_maximum"
+    t.string   "sex"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
