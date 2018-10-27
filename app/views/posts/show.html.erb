@@ -1,0 +1,22 @@
+<h1>id: <%= @post.id %> のメッセージ詳細ページ</h1>
+
+<p><%= @post.sports %></p>
+<p><%= @post.title %></p>
+<p><%= @post.content %></p>
+<p><%= @post.event_date %></p>
+<p><%= @post.open %></p>
+<p><%= @post.closed %></p>
+<p><%= @post.due_date %></p>
+<p><%= @post.due_time %></p>
+<p><%= @post.erea %></p>
+<p><%= @post.place %></p>
+<p><%= @post.capacity %></p>
+<p><%= @post.cost %></p>
+<p><%= @post.level %></p>
+<p><%= @post.age_minimum %></p>
+<p><%= @post.age_maximum %></p>
+<p><%= @post.sex %></p>
+
+<%= link_to '募集一覧に戻る', posts_path %><br>
+<%= link_to 'この募集内容を編集する', edit_post_path(@post) %><br>
+<%= link_to 'このメッセージを削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>

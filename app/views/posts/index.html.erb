@@ -1,0 +1,13 @@
+<h1>個人参加募集一覧</h1>
+
+<ul>
+  <% @posts.each do |post| %>
+    <li><%= link_to post.id, post %> : <%= post.title %></li>
+    <li><%= post.event_date %></li>
+    <li><%= post.open %></li>
+    <li><%= post.closed %></li>
+    <li><%#= post.applicante %></li>
+  <% end %>
+</ul>
+
+<%= link_to '新規募集の投稿', new_post_path %>
