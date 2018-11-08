@@ -14,18 +14,18 @@
           <%= f.text_field :content %></li>
     
       <li><%= f.label :event_date, '開催日' %>
-          <%= date_select :page, :updated_at, :use_month_numbers => true, :start_year => 2018 %></li>
+          <%= date_select :post, :event_date, :use_month_numbers => true, :start_year => 2018 %></li>
       
       <li><%= f.label :open, '開始時間' %>
-          <%= time_select :page, :updated_at, :minute_step => 10 %>～
+          <%= time_select :post, :open, :minute_step => 10 %>～
           <%= f.label :closed, '終了時間' %>
-          <%= time_select :page, :updated_at, :minute_step => 10 %></li>
+          <%= time_select :post, :closed, :minute_step => 10 %></li>
           
       <li><%= f.label :due_date, '締切日付' %>
-          <%= date_select :page, :updated_at, :use_month_numbers => true, :start_year => 2018 %></li>
+          <%= date_select :post, :due_date, :use_month_numbers => true, :start_year => 2018 %></li>
           
       <li><%= f.label :due_time, '締切時間' %>
-          <%= time_select :page, :updated_at, :minute_step => 10 %></li>
+          <%= time_select :post, :due_time, :minute_step => 10 %></li>
           
       <li><%= f.label :erea, '開催エリア' %>
           <%= f.text_field :erea %></li>

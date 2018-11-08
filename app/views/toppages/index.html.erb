@@ -1,28 +1,19 @@
 <% if logged_in? %>
   <p>ログイン完了ユーザ: <%= current_user.name %></p>
+  <div class="col-xs-8">
+    <%= render 'posts/posts', posts: @posts %>
+  </div>
 <% else %>
-    <div class="center">
-      <div class="col-xs-6">
-      　<div style="float:center;">
-          <div class="panel panel-default">
-            <div class="panel-heading">soccer</div>  
-              <div class="panel-body">
-                <h1>test</h1>
-              </div>
+  <div class="center">
+    <div class="col-xs-12">
+      <div style="float:center;">
+        <div class="panel panel-default">
+          <div class="panel-heading">個人参加募集情報</div>  
+            <div class="panel-body">
+              <h1></h1>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-6">
-        <div style="float:center;">
-          <div class="panel panel-default">
-            <div class="panel-heading">futsal</div>  
-              <div class="panel-body">
-                <h1>test</h1>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
+  </div>
 <% end %>

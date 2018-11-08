@@ -1,0 +1,31 @@
+<div class="row">
+  <aside class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="center">プロフィール</div>
+      </div>
+      <div class="panel-body">
+        <img class="media-object img-rounded img-responsive" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
+        <h2 class="center"><%= @user.name %></h2>
+        <!-- ここから公開設定によって表示、非表示 -->
+        <h2 class="center">性　別</h2>
+        <h2 class="center">年　齢</h2>
+        <!-- ここまで公開設定 -->
+        <h2 class="center">活動エリア</h2>
+        <h2 class="center">主催者評価：100</h2>
+      </div>
+       <ul class="nav nav-pills nav-stacked">
+<!--        	<li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
+        	<li role="presentation"><a href="#">個人参加募集</a></li>
+          <%= render 'relationships/reserve_button', user: @user %>
+    			<li role="presentation" class="divider"></li>
+        	<li role="presentation"><a href="#">
+        	    <span class="glyphicon glyphicon-cog"></span> 設定</a></li>
+        	<%# if  current_user.lastmatchday <= 7 %>
+        	<li role="presentation"><a href="#">プレイヤーを評価する</a></li>
+        	<%# end %>
+        	<%# if  current_user.lastmatchday <= 7 %>
+        	<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>
+        	<%# end %>
+        </ul>
+    </div>

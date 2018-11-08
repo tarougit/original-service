@@ -15,10 +15,9 @@
         <h2 class="center">主催者評価：100</h2>
       </div>
        <ul class="nav nav-pills nav-stacked">
+          <li class="<%= 'active' if current_page?(user_path(@user)) %>"><%= link_to posts_path(@posts) do %>個人参加募集<span class="badge"><%= @count_posts %></span><% end %></li>
 <!--        	<li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
-        	<li role="presentation" ><a href="#">個人参加募集</a></li>
-        	<li role="presentation"><a href="#">個人参加応募</a></li>
-
+          <%= render 'relationships/reserve_button', user: @user %>
     			<li role="presentation" class="divider"></li>
         	<li role="presentation"><a href="#">
         	    <span class="glyphicon glyphicon-cog"></span> 設定</a></li>
@@ -31,6 +30,7 @@
         </ul>
     </div>
   </aside>
+  
   <div class="col-xs-8">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -88,7 +88,7 @@
         <div class="center">募集中</div>
       </div>
       <div class="panel-body">
-        
+        <%= render 'posts/posts', posts: @posts %>
       </div>
     </div>
   </aside>

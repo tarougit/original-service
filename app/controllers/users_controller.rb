@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show]
+  before_action :require_user_logged_in, only: [:index, :show, :relationships, :destroy]
   
   def index
   end
 
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.order('created_at DESC').page(params[:page])
+    counts(@user)
   end
 
   def new
@@ -31,11 +33,16 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user = User.destroy(user_params)
-    
+    @user = User.find(params[:id])
       @user.delete
       flash[:success] = '退会しました'
       redirect_to root_url
+  end
+  
+  def relationships
+    @user = User.find(params[:id])
+    @relationship = @user.relationships.page(params[:page])
+    counts(@relationship)
   end
   
   private

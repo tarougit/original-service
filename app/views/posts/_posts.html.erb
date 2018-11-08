@@ -1,0 +1,19 @@
+<ul class="media-list">
+  <% posts.each do |post| %>
+    <li class="media">
+      <div class="media-left">
+        <img class="media-object img-rounded" src="<%= gravatar_url(post.user, { size: 50 }) %>" alt="">
+      </div>
+      <div class="media-body">
+        <div>
+          <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted">posted at <%= post.created_at %></span>
+        </div>
+        <div>
+          <p><%= post.inspect %></p>
+          <p><%#= post.sports post.title post.content post.event_date post.open post.closed post.due_date post.due_time post.erea post.place post.capacity post.cost post.level post.age_minimum post.age_maximum post.sex %></p>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate posts %>
+</ul>

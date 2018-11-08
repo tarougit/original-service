@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+  before_action :require_user_logged_in
+  before_action :correct_user, only: [:edit, :update, :destroy]
+  
   def index
     @posts = Post.all
   end
@@ -12,14 +15,14 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-
+    @post = current_user.posts.build(post_params)
     if @post.save
-      flash[:success] = '募集が正常に投稿されました'
-      redirect_to @post
+      flash[:success] = '募集を投稿しました。'
+      redirect_to root_url
     else
-      flash.now[:danger] = '募集が投稿されませんでした'
-      render :new
+      @posts = current_user.posts.order('created_at DESC').page(params[:page])
+      flash.now[:danger] = '募集の投稿に失敗しました。'
+      render 'toppages/index'
     end
   end
 
@@ -28,22 +31,20 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
+    @posts = current_user.posts.find(params[:id])
 
     if @post.update(post_params)
       flash[:success] = '募集内容は正常に更新されました'
-      redirect_to @post
+      redirect_to root_url
     else
       flash.now[:danger] = '募集内容は更新されませんでした'
-      render :edit
+      render 'toppages/index'
     end
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    @post.destroy
-
-    flash[:success] = 'Message は正常に削除されました'
+     @post.destroy
+    flash[:success] = '募集を削除しました。'
     redirect_to posts_url
   end
   
@@ -52,5 +53,12 @@ class PostsController < ApplicationController
   # Strong Parameter
   def post_params
     params.require(:post).permit(:sports, :title, :content, :event_date, :open, :closed, :due_date, :due_time, :erea, :place, :capacity, :cost, :level, :age_minimum, :age_maximum, :sex)
+  end
+  
+  def correct_user
+    @post = current_user.posts.find_by(id: params[:id])
+    unless @post
+      redirect_to root_url
+    end
   end
 end
