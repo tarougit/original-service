@@ -26,7 +26,7 @@
                 <li><%= link_to 'My profile', user_path(current_user) %></li>
                 <li role="separator" class="divider"></li>
                 <li><%= link_to 'ログアウト', logout_path, method: :delete %></li>
-                <li><%= link_to '退　会', user_path(current_user), method: :delete %></li>
+                <li><%= link_to '退　会', user_path(current_user), method: :delete, data: { confirm: "本当に退会しますか？" } %></li>
               </ul>
             </li>
           <% else %>

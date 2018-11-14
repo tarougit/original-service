@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   root to: 'relationships#index'
   resources :users, only: [:show, :create, :destroy] do
     member do
-      get :posts
+      get :relationship_posts
     end
     collection do
       get :search

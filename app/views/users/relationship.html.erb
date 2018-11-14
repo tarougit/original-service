@@ -27,5 +27,6 @@
         	<%# if  current_user.lastmatchday <= 7 %>
         	<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>
         	<%# end %>
+        	<%= render 'users', users: @relationships %>
         </ul>
     </div>

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   
   def counts(user)
     @count_posts = user.posts.count
-    @count_relationships = user.relationships.count
+    @count_relationship_posts = user.relationship_posts.count
   end
   
   private

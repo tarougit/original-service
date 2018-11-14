@@ -17,7 +17,7 @@
        <ul class="nav nav-pills nav-stacked">
           <li class="<%= 'active' if current_page?(user_path(@user)) %>"><%= link_to posts_path(@posts) do %>個人参加募集<span class="badge"><%= @count_posts %></span><% end %></li>
 <!--        	<li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
-          <%= render 'relationships/reserve_button', user: @user %>
+          <li><%= link_to "募集に応募する", posts_path %></li>
     			<li role="presentation" class="divider"></li>
         	<li role="presentation"><a href="#">
         	    <span class="glyphicon glyphicon-cog"></span> 設定</a></li>
@@ -89,6 +89,7 @@
       </div>
       <div class="panel-body">
         <%= render 'posts/posts', posts: @posts %>
+        <li><%= link_to "募集管理ページ", relationship_posts_user_path %></li>
       </div>
     </div>
   </aside>
@@ -97,10 +98,10 @@
   <aside class="col-xs-10">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="center">応募確定</div>
+        <div class="center">応募中</div>
       </div>
       <div class="panel-body">
-        
+        <P>応募承認済みレコード表示</P>
       </div>
     </div>
   </aside>

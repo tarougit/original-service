@@ -1,13 +1,13 @@
-<% unless current_user == user %>
-  <% if current_user.relationshiping?(post) %>
+  <% if current_user.relationship?(post) %>
     <%= form_for(current_user.relationships.find_by(post_id: post.id), html: { method: :delete }) do |f| %>
       <%= hidden_field_tag :post_id, post.id %>
-      <%= f.submit 'キャンセルする', class: 'btn btn-danger btn-block' %>
+      <%= f.submit 'キャンセルする', class: 'btn btn-danger btn-block', data: { confirm: '本当にキャンセルしますか？' } %>
     <% end %>
   <% else %>
-    <%= form_for(current_user.relationships.build) do |f| %>
-      <%= hidden_field_tag :post_id, post.id %>
-      <%= f.submit '応募する', class: 'btn btn-primary btn-block' %>
+    <% if current_user != @post.user %>
+      <%= form_for(current_user.relationships.build) do |f| %>
+        <%= hidden_field_tag :post_id, post.id %>
+        <%= f.submit '応募する', class: 'btn btn-primary btn-block', data: { confirm: '本当に応募しますか？' } %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>

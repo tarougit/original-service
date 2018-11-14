@@ -21,7 +21,11 @@ class User < ApplicationRecord
     relationship.destroy if relationship
   end
   
-  def relationshiping?(other_post)
-    self.relationshipings.include?(other_post)
+  def relationship?(other_post)
+    self.relationships.include?(other_post)
+  end
+  
+  def feed_relationship_posts
+    Relationship_post.where(post_id: self.relationship_ids + [self.id])
   end
 end
