@@ -37,12 +37,6 @@
         <div class="center">ステータスグラフ</div>
       </div>
       
-      <div class="panel-heading">
-        <div style="float:center; width:50%;"><a href="#">サッカー</a></div>
-      </div>
-      <div class="panel-heading">
-        <div style="float:center; width:50%;"><a href="#">フットサル</a></div>
-      </div>
       <div class="right">参加レベル：<%#= 5中級 %></div>
       <div class="right">通算ゲーム数：<%#= 100 %></div>
     </div>
@@ -85,11 +79,12 @@
   <aside class="col-xs-10">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="center">募集中</div>
+        <div class="center">個人参加募集</div>
       </div>
       <div class="panel-body">
         <%= render 'posts/posts', posts: @posts %>
-        <li><%= link_to "募集管理ページ", relationship_posts_user_path %></li>
+        <%= link_to "募集管理ページ", post_users_user_path %><br>
+        <%#= link_to "参加者リスト", users_path %>
       </div>
     </div>
   </aside>
@@ -98,10 +93,10 @@
   <aside class="col-xs-10">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="center">応募中</div>
+        <div class="center">個人参加応募</div>
       </div>
       <div class="panel-body">
-        <P>応募承認済みレコード表示</P>
+        <%= link_to "個人参加応募一覧", relationship_posts_user_path %>
       </div>
     </div>
   </aside>

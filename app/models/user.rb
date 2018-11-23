@@ -24,8 +24,4 @@ class User < ApplicationRecord
   def relationship?(other_post)
     self.relationships.include?(other_post)
   end
-  
-  def feed_relationship_posts
-    Relationship_post.where(post_id: self.relationship_ids + [self.id])
-  end
 end

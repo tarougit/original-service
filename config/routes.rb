@@ -10,12 +10,13 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :create, :destroy] do
     member do
       get :relationship_posts
+      get :post_users
     end
     collection do
       get :search
     end
   end
-  resources :relationships, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy,]
   
   resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy]

@@ -1,4 +1,4 @@
-<h1>id: <%= @post.id %> のメッセージ詳細ページ</h1>
+<h1><%= @post.user.name %> の募集内容</h1>
 
 <p><%= @post.sports %></p>
 <p><%= @post.title %></p>
@@ -23,25 +23,5 @@
   <%= link_to 'この募集内容を編集する', edit_post_path(@post) %><br>
   <%= link_to 'このメッセージを削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
 
-
-  <ul>
-    <% @post.relationship_users.each do |user| %>
-        <li>
-          <%= link_to user.name, user %>
-          <span>
-            <% if @post.status == 0 %>
-              <%= form_for(@post) do |f| %>
-                <%= f.hidden_field :status, value: user.id %>
-                <%= f.submit "登録" %>
-              <% end %>
-            <% elsif User.find_by(id: @post.status) == user %>
-              <%= form_for(@post) do |f| %>
-                <%= f.hidden_field :status, value: 0 %>
-                <%= f.submit "解除" %>
-              <% end %>
-            <% end %>
-          </span>
-        </li>
-    <% end %>
-  </ul>
+  <%= render 'relationships/relationship_users', post: @post %>
 <% end %>

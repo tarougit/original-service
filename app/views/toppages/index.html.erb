@@ -1,19 +1,15 @@
-<% if logged_in? %>
-  <p>ログイン完了ユーザ: <%= current_user.name %></p>
-  <div class="col-xs-8">
-    <%= render 'posts/posts', posts: @posts %>
-  </div>
-<% else %>
+
   <div class="center">
     <div class="col-xs-12">
       <div style="float:center;">
         <div class="panel panel-default">
           <div class="panel-heading">個人参加募集情報</div>  
             <div class="panel-body">
-              
+              <% @posts.each do |post| %>
+                <%= post.inspect %><br>
+              <% end %>
             </div>
         </div>
       </div>
     </div>
   </div>
-<% end %>

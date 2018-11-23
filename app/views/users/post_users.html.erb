@@ -1,0 +1,5 @@
+<% @post_users.each do |post| %>
+          
+    <%= post.inspect %><br><br>
+    <%= render 'relationships/relationship_users', post: post %><br><br>
+<% end %>

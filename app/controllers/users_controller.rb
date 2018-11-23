@@ -39,10 +39,16 @@ class UsersController < ApplicationController
       redirect_to root_url
   end
   
-  def relationships
+  def post_users #募集管理ページ
     @user = User.find(params[:id])
-    @relationship = @user.relationships.page(params[:page])
-    counts(@relationship)
+    #@relationships = Relationship.users.page(params[:page])
+    @post_users = @user.posts
+    #counts(@relationship)
+  end
+  
+  def relationship_posts #応募管理ページ
+    @user = User.find(params[:id])
+    @relationship_posts = @user.relationship_posts.page(params[:page])
   end
   
   private

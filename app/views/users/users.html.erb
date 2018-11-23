@@ -1,0 +1,6 @@
+<% current_user != user %>
+  <% @relationship_posts.users.where(status: value: user.id).each do |user| %>
+    
+    <%= link_to user.name, user %><br>
+  <% end %>
+<% end %>
