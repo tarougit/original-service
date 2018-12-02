@@ -1,9 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :edit, :update, :relationships, :destroy]
   
-  def index
-  end
-
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.order('created_at DESC').page(params[:page])
@@ -49,6 +46,11 @@ class UsersController < ApplicationController
   def relationship_posts #応募管理ページ
     @user = User.find(params[:id])
     @relationship_posts = @user.relationship_posts.page(params[:page])
+  end
+  
+  def profile
+    @user = User.find(params[:id])
+    @profile = @user.build_profile
   end
   
   private

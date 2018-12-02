@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   get 'signup', to: 'users#new'
   
-  root to: 'relationships#index'
-  resources :users, only: [:show, :create, :destroy] do
+  # root to: 'relationships#index'
+  resources :users, only: [:show, :new, :create, :destroy] do
+    resource :profiles, only: [:show, :new, :create, :edit, :update]
     member do
       get :relationship_posts
       get :post_users
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   end
   resources :relationships, only: [:create, :destroy,]
   
+  #resources :profiles, only: [:show, :new, :create, :edit, :update]
   resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 end

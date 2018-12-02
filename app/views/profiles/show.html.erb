@@ -1,0 +1,11 @@
+<h>プロフィール</h>
+<%# if @profile.icon? %>
+　　<%#= icon_tag @profile.icon.thumb.url %>
+　<%# else %>
+　　<%#= icon_tag 'noimage.gif' %>
+　<%# end %>
+  <%= render 'profiles/profile', profile: @profile %>
+
+  <%# if (current_user == @profile.user) %>
+    <%= link_to 'プロフィールを変更する', edit_user_profiles_path %>
+  <%# end %>

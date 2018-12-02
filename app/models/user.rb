@@ -12,6 +12,8 @@ class User < ApplicationRecord
   #has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'post_user_id'
   #has_many :reserves, through: :reverses_of_relationship, source: :user
   
+  has_one :profile
+  
   def relationship(other_post)
     self.relationships.find_or_create_by(post_id: other_post.id)
   end
@@ -25,3 +27,4 @@ class User < ApplicationRecord
     self.relationships.include?(other_post)
   end
 end
+

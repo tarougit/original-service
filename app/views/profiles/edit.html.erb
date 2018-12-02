@@ -1,0 +1,33 @@
+<h1>プロフィール変更</h1>
+
+<ol>
+  <%= form_for(@profile, url: user_profiles_path(@user)) do |f| %>
+    <%#= f.label :image %>
+    <%#= f.file_field :image %>
+
+
+  <li><%= f.label :active_area, '活動エリア' %> 
+      <%= f.text_field :active_area, :placeholder => "東京都" %></li>
+    
+  <li><%= f.label :sex, :"性　別" %>
+      <%= f.select :sex, [["男"], ["女"]] %></li>
+
+  <li><%= f.label :birthday, :"年齢層" %>
+      <%= f.select :birthday, [["10代"], ["20代"], ["30代"], ["40代"], ["50代"], ["60代以上"]] %></li>
+      
+  <li><%= f.label :sports, :"競　技" %>
+      <%= f.select :sports, [["サッカー"], ["フットサル"], ["サッカーとフットサル"]] %></li>
+    
+  <li><%= f.label :level, '個人参加　参加レベル' %>
+      <%= f.select :level, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]] %>～
+      <%= f.select :level, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]] %></li>
+      
+  <li><%= f.label :battle_record, '戦　績' %>
+      <%= f.text_field :battle_record, :placeholder => "サッカー東京２部リーグ出場：優勝" %></li>
+      
+  <li><%= f.label :career, '経　歴' %>
+      <%= f.text_field :career, :placeholder => "全国高校サッカー選手権出場：ベスト８" %></li>
+  
+  <%= f.submit 'プロフィール変更' %>
+  <% end %>
+</ol>

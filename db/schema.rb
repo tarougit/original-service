@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181027112326) do
+ActiveRecord::Schema.define(version: 20181202030119) do
+
+  create_table "hexagons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "pass"
+    t.integer  "dribble"
+    t.integer  "shoot"
+    t.integer  "body_control"
+    t.integer  "judgement"
+    t.integer  "speed"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -36,6 +47,28 @@ ActiveRecord::Schema.define(version: 20181027112326) do
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
   end
 
+  create_table "profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "icon"
+    t.integer  "pass"
+    t.integer  "dribble"
+    t.integer  "shoot"
+    t.integer  "body_control"
+    t.integer  "judgement"
+    t.integer  "speed"
+    t.string   "active_area"
+    t.string   "sex"
+    t.date     "birthday"
+    t.string   "sports"
+    t.string   "level"
+    t.text     "battle_record", limit: 65535
+    t.text     "career",        limit: 65535
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "image"
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
+
   create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "post_id"
@@ -54,6 +87,7 @@ ActiveRecord::Schema.define(version: 20181027112326) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "profiles", "users"
   add_foreign_key "relationships", "posts"
   add_foreign_key "relationships", "users"
 end
