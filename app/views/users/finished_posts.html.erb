@@ -1,0 +1,5 @@
+<ul>
+  <% @posts.each do |post| %>
+      <li><%= post.inspect %><%= link_to "参加者を評価する", post_evaluate_user_path(@user, post_id: post.id) %></li>
+  <% end %>
+</ul>

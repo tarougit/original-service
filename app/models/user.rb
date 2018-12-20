@@ -14,6 +14,13 @@ class User < ApplicationRecord
   
   has_one :profile
   
+  #has_many :points
+  #has_many :evaluated_users, through: :points, source: :evaluated_user
+  #has_many :revers_of_point, class_name: 'Point', foreign_key: 'evaluated_user_id'
+  #has_many :evaluaters, through: :reverse_of_point, source: :user
+  
+  #has_one :hexagon
+  
   def relationship(other_post)
     self.relationships.find_or_create_by(post_id: other_post.id)
   end
@@ -26,5 +33,12 @@ class User < ApplicationRecord
   def relationship?(other_post)
     self.relationships.include?(other_post)
   end
+  
+  #def point(other_user)
+    #self.points.find_or_create_by(post_id: post.id, evaluated_user_id: other_user.id, hexagon_id: other_hexagon.id)
+  #end
+  
+  #def point?(other_user)
+    #self.points.include?(other_user)
+  #end
 end
-

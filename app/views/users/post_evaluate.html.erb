@@ -1,0 +1,6 @@
+<h1><%= @post.title %> 内での<%= @user.name %> の評価</h1>
+
+<%= form_tag(url: "#") do %>
+  <%= collection_radio_buttons :evaluate, :point, @hexagons, :id, :name %>
+  <%= submit_tag '選択した項目を評価する' %>
+<% end %>

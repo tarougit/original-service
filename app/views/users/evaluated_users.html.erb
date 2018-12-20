@@ -1,0 +1,13 @@
+<h>投稿した募集</h>
+  <%# @post_users.each do |post| %>
+              
+    <%#= post.inspect %><br><br>
+    <%#= render 'relationships/relationship_users', post: post %><br><br>
+  <%# end %>
+
+<h>応募した募集</h>
+  <%# @relationship_posts.each do |post| %>
+  
+    <%#= post.inspect %><br>
+  <%# end %>
+  <%= render 'points/point', evaluated_user: @evaluated_users %>

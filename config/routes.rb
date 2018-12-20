@@ -12,14 +12,22 @@ Rails.application.routes.draw do
     member do
       get :relationship_posts
       get :post_users
+      get :finished_posts
+      get :finished_users
+      get :post_evaluate
     end
     collection do
       get :search
     end
   end
-  resources :relationships, only: [:create, :destroy,]
-  
+  resources :relationships, only: [:create, :destroy]
+  resources :points, only: [:create]
+  resources :hexagons, only: [:show, :create, :edit, :update]
   #resources :profiles, only: [:show, :new, :create, :edit, :update]
-  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :users
+  resources :posts do
+    member do
+      
+    end
+  end
 end

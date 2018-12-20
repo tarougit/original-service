@@ -10,17 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181202030119) do
+ActiveRecord::Schema.define(version: 20181202112210) do
 
   create_table "hexagons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "pass"
-    t.integer  "dribble"
-    t.integer  "shoot"
-    t.integer  "body_control"
-    t.integer  "judgement"
-    t.integer  "speed"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "post_id"
+    t.integer  "user_id"
+    t.integer  "evaluated_user_id"
+    t.integer  "hexagon_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["evaluated_user_id"], name: "index_points_on_evaluated_user_id", using: :btree
+    t.index ["hexagon_id"], name: "index_points_on_hexagon_id", using: :btree
+    t.index ["post_id"], name: "index_points_on_post_id", using: :btree
+    t.index ["user_id"], name: "index_points_on_user_id", using: :btree
   end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -87,6 +95,10 @@ ActiveRecord::Schema.define(version: 20181202030119) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "points", "hexagons"
+  add_foreign_key "points", "posts"
+  add_foreign_key "points", "users"
+  add_foreign_key "points", "users", column: "evaluated_user_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "relationships", "posts"
   add_foreign_key "relationships", "users"

@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+names = %w(ドリブル シュート スピード パス 判断力 体の使いかた)
+
+names.each do |name|
+  Hexagon.create!(name: name)
+end

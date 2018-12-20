@@ -43,10 +43,15 @@ class PostsController < ApplicationController
   end
 
   def destroy
-     @post.destroy
+    @post.destroy
     flash[:success] = '募集を削除しました。'
     redirect_to posts_url
   end
+  
+  #def evaluated_posts
+    #@user = User.find(params[:id])
+    #@evaluated_posts = @user.post_users.relationship_posts(params[:post_id])
+  #end
   
   private
   

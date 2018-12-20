@@ -27,10 +27,10 @@
     			<% end %>
 
         	<%# if  current_user.lastmatchday <= 7 %>
-        	<li role="presentation"><a href="#">プレイヤーを評価する</a></li>
+        	<li><%= link_to "評価する", finished_posts_user_path(@user) %></li>
         	<%# end %>
         	<%# if  current_user.lastmatchday <= 7 %>
-        	<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>
+        	<!--<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>-->
         	<%# end %>
         </ul>
     </div>
@@ -42,8 +42,8 @@
         <div class="center">ステータスグラフ</div>
       </div>
       
-      <div class="right">参加レベル：<%#= 5中級 %></div>
-      <div class="right">通算ゲーム数：<%#= 100 %></div>
+      <!-- <div class="right">参加レベル：<%#= 5中級 %></div>
+      <div class="right">通算ゲーム数：<%#= 100 %></div> -->
     </div>
         
 
