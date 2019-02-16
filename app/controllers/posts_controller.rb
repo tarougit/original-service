@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   
   def index
     @posts = Post.all
+    @level = Post.group(:level).pluck(:level).sort
   end
 
   def show
@@ -53,11 +54,17 @@ class PostsController < ApplicationController
     #@evaluated_posts = @user.post_users.relationship_posts(params[:post_id])
   #end
   
+  def search
+    @posts = Post.where('sports LIKE ?', "%#{params[:sports]}%", 'erea LIKE ?', "%#{params[:erea]}%", 'event_date LIKE ?', "%#{params[:event_date]}%", 'level LIKE ?', "%#{params[:level]}%")
+    @level = Post.group(:level).pluck(:level).sort
+    render :index
+  end
+  
   private
   
   # Strong Parameter
   def post_params
-    params.require(:post).permit(:sports, :title, :content, :event_date, :open, :closed, :due_date, :due_time, :erea, :place, :capacity, :cost, :level, :age_minimum, :age_maximum, :sex, :status)
+    params.require(:post).permit(:sports, :title, :content, :event_date, :open, :closed, :due_date, :due_time, :erea, :place, :capacity, :cost, :level, :age_minimum, :age_maximum, :sex)
   end
   
   def correct_user

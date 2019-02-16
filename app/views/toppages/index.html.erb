@@ -3,6 +3,24 @@
     <div class="col-xs-12">
       <div style="float:center;">
         <div class="panel panel-default">
+          <div class="panel-heading">絞り込み検索</div>  
+            <div class="panel-body">
+              <%= form_tag(search_posts_path, method: "get") do %>
+                <div>競　技<%= select_tag(:sports, options_for_select([[], ['サッカー'], ['フットサル']])) %></div>
+                <div>開催エリア<%= select_tag(:erea, options_for_select([[], ['東京都'], ['千葉県']])) %></div>
+                <div>開催日<%= select_tag(:event_date, options_for_select([[], ['2019/'], ['2019/']])) %></div>
+                <div>レベル<%= select_tag(:level, options_for_select([[], [:level, @level]])) %></div>
+                <%= submit_tag "絞り込み" %>
+              <% end %>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="center">
+    <div class="col-xs-12">
+      <div style="float:center;">
+        <div class="panel panel-default">
           <div class="panel-heading">個人参加募集情報</div>  
             <div class="panel-body">
               <% @posts.each do |post| %>

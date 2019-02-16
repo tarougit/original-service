@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181202112210) do
+ActiveRecord::Schema.define(version: 20190211124327) do
 
   create_table "hexagons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -49,9 +49,8 @@ ActiveRecord::Schema.define(version: 20181202112210) do
     t.integer  "age_minimum"
     t.integer  "age_maximum"
     t.string   "sex"
-    t.integer  "status",                    default: 0, null: false
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
   end
 
@@ -80,8 +79,9 @@ ActiveRecord::Schema.define(version: 20181202112210) do
   create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "post_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "status",     default: 0
     t.index ["post_id"], name: "index_relationships_on_post_id", using: :btree
     t.index ["user_id", "post_id"], name: "index_relationships_on_user_id_and_post_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_relationships_on_user_id", using: :btree

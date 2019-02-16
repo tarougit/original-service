@@ -35,49 +35,45 @@
         </ul>
     </div>
   </aside>
-  
+
   <div class="col-xs-8">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="center">ステータスグラフ</div>
+        <div class=center>ステータスグラフ</div>
       </div>
-      
       <!-- <div class="right">参加レベル：<%#= 5中級 %></div>
       <div class="right">通算ゲーム数：<%#= 100 %></div> -->
     </div>
-        
-
-          <div class="panel-body">
-              <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
-                      <!--レーダーチャートを描画する Canvas-->
+      <div class="panel-body">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+              <!--レーダーチャートを描画する Canvas-->
               <!-- チャート描画キャンバス -->
-              <div><canvas id="myChart"></canvas></div>
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+  </div>
+</div>
 
-         </div>
+<div class="col-xs-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="center">出場大会</div>
+    </div>
+      <div class="panel-body">
+        <p>全国大会</p>
+      </div>
     </div>
 </div>
-  <div class="col-xs-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="center">出場大会</div>
+<div class="col-xs-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="center">経　歴</div>
+    </div>
+      <div class="panel-body">
+        <p>2010~2012 FC東京U-18所属</p>
       </div>
-
-          <div class="panel-body">
-              <p>全国大会</p>
-          </div>
-      </div>
-  </div>
-  <div class="col-xs-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="center">経　歴</div>
-      </div>
-
-          <div class="panel-body">
-              <p>2010~2012 FC東京U-18所属</p>
-          </div>
-      </div>
-  </div>
+    </div>
 </div>
 
 <div class="row">
@@ -114,10 +110,11 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myRadarChart = new Chart(ctx, {
     type: 'radar',
     data: {
-        labels: ["パ　ス", "ドリブル", "シュート", "ボディコントロール", "状況判断", "スピード"],
+        labels: ["ドリブル", "シュート", "スピード", "パス", "判断力", "体の使いかた"],
         datasets: [{
             label: 'ステータス',
-            data: [12, 19, 3, 5, 2, 3],
+            // data: [12, 19, 3, 5, 2, 3],
+            data, <%= @summary_data %>,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -140,7 +137,7 @@ var myRadarChart = new Chart(ctx, {
   options: {
     scale: {
       pointLabels: {
-        fontSize: 15 //フォントサイズ
+        fontSize: 14 //フォントサイズ
       },
       ticks: { //http://www.chartjs.org/docs/#scales-radial-linear-scale
         stepSize: 1, // 目盛の間隔

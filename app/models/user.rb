@@ -14,12 +14,9 @@ class User < ApplicationRecord
   
   has_one :profile
   
-  #has_many :points
-  #has_many :evaluated_users, through: :points, source: :evaluated_user
-  #has_many :revers_of_point, class_name: 'Point', foreign_key: 'evaluated_user_id'
-  #has_many :evaluaters, through: :reverse_of_point, source: :user
+  has_one :hexagon
   
-  #has_one :hexagon
+  has_many :points
   
   def relationship(other_post)
     self.relationships.find_or_create_by(post_id: other_post.id)
@@ -34,11 +31,15 @@ class User < ApplicationRecord
     self.relationships.include?(other_post)
   end
   
-  #def point(other_user)
-    #self.points.find_or_create_by(post_id: post.id, evaluated_user_id: other_user.id, hexagon_id: other_hexagon.id)
-  #end
   
-  #def point?(other_user)
-    #self.points.include?(other_user)
-  #end
+  #=> #<ActiveRecord::Relation
+  # [#<Point id: 1, post_id: 16, user_id: 1, evaluated_user_id: 6, hexagon_id: 1, created_at: "2018-12-05 12:06:58", updated_at: "2018-12-05 12:06:58">]> 
+
+  def has_make_point?(post)
+    if (self.points.find_by(post_id: post.id))
+      return true
+    else
+      return false
+    end
+  end
 end

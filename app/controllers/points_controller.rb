@@ -1,13 +1,11 @@
 class PointsController < ApplicationController
-  #before_action :require_user_logged_in
+  before_action :require_user_logged_in
   
-  #def create
-    #user = User.find(params[:user_id])
-    #evaluated_user = Evaluated_user.find(params[:user_id])
-    #hexagon = Hexagon.find(params[:hexagon_id])
-    #post = Post.find(params[:post_id])
-    #user.point(evaluated_user, hexagon, post)
-    #flash[:success] = '投票しました'
-    #redirect_back(fallback_location: root_path)
-  #end
+  def create
+    @ev_kind = params[:evaluate][:point]
+    @user = User.find(params[:id])
+    @post = Post.find(params[:post_id])
+    current_user.point(evaluated_user_id: current_user_id,
+                       hexagon_id: @ev_kind, post_id: @post.id)
+  end
 end

@@ -1,17 +1,17 @@
 <ul>
-  <% post.relationship_users.each do |user| %>
+  <% post.users.each do |user| %>
       <li>
         <%= link_to user.name, user %>
         <span>
-          <% if post.status == 0 %>
-            <%= form_for(post) do |f| %>
-              <%= f.hidden_field :status, value: user.id %>
-              <%= f.submit "承認" %>
+          <% unless post.has_approved?(user) %>
+            <%= form_for(post.relationships.find_by(user_id: user.id)) do |f| %>
+              <%= f.hidden_field :status, value: 1 %>
+              <%= f.submit "承 認", class:"btn btn-primary" %>
             <% end %>
-          <% elsif User.find_by(id: post.status) == user %>
-            <%= form_for(post) do |f| %>
+          <% else %>
+            <%= form_for(post.relationships.find_by(user_id: user.id)) do |f| %>
               <%= f.hidden_field :status, value: 0 %>
-              <%= f.submit "解除" %>
+              <%= f.submit "拒 否", class:"btn btn-danger" %>
             <% end %>
           <% end %>
         </span>

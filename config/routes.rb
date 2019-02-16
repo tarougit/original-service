@@ -15,19 +15,20 @@ Rails.application.routes.draw do
       get :finished_posts
       get :finished_users
       get :post_evaluate
+      post :post_evaluate, to:"users#make_evaluate"
     end
     collection do
       get :search
     end
   end
-  resources :relationships, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy, :update]
   resources :points, only: [:create]
   resources :hexagons, only: [:show, :create, :edit, :update]
-  #resources :profiles, only: [:show, :new, :create, :edit, :update]
+  
   resources :users
   resources :posts do
-    member do
-      
+    collection do
+      get :search
     end
   end
 end

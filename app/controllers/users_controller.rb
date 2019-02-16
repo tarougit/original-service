@@ -4,6 +4,20 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.order('created_at DESC').page(params[:page])
+    
+    summaries = @user.points.group(:hexagon_id).count(:hexagon_id)
+    
+    ## {1=>2, 4=>1, 5=>2} 
+    
+    @summary_data = []
+    (1..6).each do |key|
+      if summaries[key] 
+        @summary_data[key - 1] = summaries[key]
+      else
+        @summary_data[key - 1] = 0
+      end
+    end
+ 
     counts(@user)
   end
 
@@ -36,14 +50,14 @@ class UsersController < ApplicationController
       redirect_to root_url
   end
   
-  def post_users #募集管理ページ
+  def post_users #募集投稿
     @user = User.find(params[:id])
     #@relationships = Relationship.users.page(params[:page])
     @post_users = @user.posts
     #counts(@relationship)
   end
   
-  def relationship_posts #応募管理ページ
+  def relationship_posts #応 募
     @user = User.find(params[:id])
     @relationship_posts = @user.relationship_posts.page(params[:page])
   end
@@ -53,7 +67,7 @@ class UsersController < ApplicationController
     @profile = @user.build_profile
   end
   
-  def finished_posts #応募参加したイベント
+  def finished_posts #開催されたイベント(募集、応募 両方表示する)
     @user = User.find(params[:id])
     user_posts = @user.relationship_posts
     current_user_posts = current_user.relationship_posts
@@ -74,6 +88,25 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @post = Post.find(params[:post_id])
     @hexagons = Hexagon.all
+  end
+  
+  def make_evaluate
+    @ev_kind = params[:evaluate][:point]
+    @post = Post.find(params[:post_id])
+    
+    @user = User.find(params[:id])
+    
+    #if ((@user != current_user) &&
+    #   (post.eventdate.since(7.days) > Time.now ) &&
+    #   (!current_user.has_make_point?(@post)))
+    # current_user postにおいて既にpoint付与済みかどうか？
+    # post 7日以内か？
+    
+       p =  @user.points.build(evaluated_user_id: current_user.id,
+                        hexagon_id: @ev_kind, post_id: @post.id)
+       p.save
+    #end
+    redirect_to @user
   end
   
   private
