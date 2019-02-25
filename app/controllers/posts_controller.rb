@@ -4,7 +4,10 @@ class PostsController < ApplicationController
   
   def index
     @posts = Post.all
-    @level = Post.group(:level).pluck(:level).sort
+    #@sports = Post.group(:sports).pluck(:sports).sort
+    #@erea = Post.group(:erea).pluck(:erea).sort
+    #@event_date = Post.group(:event_date).pluck(:event_date).sort
+    #@level = Post.group(:level).pluck(:level).sort
   end
 
   def show
@@ -54,11 +57,35 @@ class PostsController < ApplicationController
     #@evaluated_posts = @user.post_users.relationship_posts(params[:post_id])
   #end
   
-  def search
-    @posts = Post.where('sports LIKE ?', "%#{params[:sports]}%", 'erea LIKE ?', "%#{params[:erea]}%", 'event_date LIKE ?', "%#{params[:event_date]}%", 'level LIKE ?', "%#{params[:level]}%")
-    @level = Post.group(:level).pluck(:level).sort
-    render :index
+  def relation_users
+    @post = Post.find(params[:id])
+    @relation_users = @post.approved_users
   end
+  
+  #def search_posts #絞り込み検索機能
+   # raise_errror
+    
+    #query_string = ""
+    #if (params[:sports]  != "")
+      #@posts = @posts.where("sports LIKE ? %#{params[:sports]}%")
+    #end
+    #@posts = Post.all.order("created_at DESC")
+    #if (params[:erea] != "")
+      #@posts = @posts.where('erea LIKE ?', "%#{params[:erea]}%")
+    #end
+    #if (params[:level] != "") 
+      #@posts = @posts.where("level = #{params[:level]}")
+    #end
+    #if (query_string =~ /^ and /)
+      #query_string = query_string.sub(/^and/, "")
+    #end
+    #@posts = Post.where("#{query_string}")
+    #@sports = Post.group(:sports).pluck(:sports).sort
+    #@erea = Post.group(:erea).pluck(:erea).sort
+    #@event_date = Post.group(:event_date).pluck(:event_date).sort
+    #@level = Post.group(:level).pluck(:level).sort
+    #render :index
+  #end
   
   private
   

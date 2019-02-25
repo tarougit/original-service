@@ -27,8 +27,11 @@ Rails.application.routes.draw do
   
   resources :users
   resources :posts do
-    collection do
-      get :search
+    #collection do
+      #get :search_posts
+    #end
+    member do
+      get :relation_users
     end
   end
 end

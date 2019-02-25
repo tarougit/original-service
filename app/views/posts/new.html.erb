@@ -28,7 +28,7 @@
           <%= time_select :post, :due_time, :minute_step => 10 %></li>
           
       <li><%= f.label :erea, '開催エリア' %>
-          <%= f.text_field :erea %></li>
+          <%= f.select :erea, [["東京都"], ["埼玉県"], ["神奈川県"]] %></li>
           
       <li><%= f.label :place, '会　場' %><spacer>
           会場を

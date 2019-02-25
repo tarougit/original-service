@@ -1,7 +1,7 @@
-<% unless current_user == @post.user %>
+<%# unless current_user == @post.user %>
   <% if current_user.relationship?(post) %>
     <%= form_for(current_user.relationships.find_by(post_id: post.id), html: { method: :delete }) do |f| %>
-      <%= hidden_field_tag :post_id, post.id %>
+      <%= f.hidden_field_tag :post_id, post.id %>
       <%= f.submit 'キャンセルする', class: 'btn btn-danger btn-block', data: { confirm: '本当にキャンセルしますか？' } %>
     <% end %>
   <% else %>
@@ -12,4 +12,4 @@
       <% end %>
     <% end %>
   <% end %>
-<% end %>
+<%# end %>

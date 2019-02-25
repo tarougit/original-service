@@ -67,21 +67,36 @@ class UsersController < ApplicationController
     @profile = @user.build_profile
   end
   
-  def finished_posts #開催されたイベント(募集、応募 両方表示する)
+  def finished_posts #開催されたイベント(募集、応募 両方表示できるようにする)
     @user = User.find(params[:id])
-    user_posts = @user.relationship_posts
-    current_user_posts = current_user.relationship_posts
+    @post_users = @user.posts #募集して終了したゲーム会
+    @relationship_posts = @user.relationship_posts #応募して終了したゲーム会
+    relation_posts = @post_users.approved_users || @relationship_posts.approved_users
+    current_relation_posts = current_user.post_users.approved_users || current_user.relationship_posts.approved_users
     post_ids = []
-    user_posts.each do |post|
-      post_ids << post.id if current_user_posts.include?(post)
+    relation_posts.each do |post|
+      post_ids << post.id if current_relation_posts.includ?(post)
     end
     @posts = Post.where(id: post_ids)
   end
   
+  #def finished_posts #開催されたイベント(募集、応募 両方表示する)
+    #@user = User.find(params[:id])
+    #user_posts = @user.relationship_posts
+    #current_user_posts = current_user.relationship_posts
+    #post_ids = []
+    #user_posts.each do |post|
+      #post_ids << post.id if current_user_posts.include?(post)
+    #end
+    #@posts = Post.where(id: post_ids)
+  #end
+  
   def finished_users #評価対象の参加者一覧
     @user = User.find(params[:id])
-    @post = Post.where(@user, :status, value: user.ids)
-    @finished_users = @post.finished_users
+    
+    @post = Post.find(params[:post_id])
+    # @post = Post.where(@user, :status, value: user.ids)
+    @finished_users = @post.approved_users
   end
   
   def post_evaluate #評価する参加者
@@ -108,6 +123,12 @@ class UsersController < ApplicationController
     #end
     redirect_to @user
   end
+  
+  #def relation_users #承認されたユーザー一覧
+    #@user = User.find(params[:id])
+    #@relationship = @user.relationships.where(status: 1)
+    #@relation_users = @relationship.relation_users
+  #end
   
   private
   

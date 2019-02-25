@@ -1,5 +1,7 @@
 <% @post_users.each do |post| %>
           
     <%= post.inspect %><br><br>
+    <%= 'active' if current_page?(relation_users_post_path(post)) %><%= link_to relation_users_post_path(post) do %>承認ユーザー一覧 <span class="badge"><%#= @count_relationship_users %></span><% end %>
     <%= render 'relationships/relationship_users', post: post %><br><br>
+    <%#= link_to '承認ユーザー一覧', relation_users_user_path %><br><br>
 <% end %>

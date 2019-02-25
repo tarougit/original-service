@@ -1,5 +1,7 @@
 <ul>
   <% @finished_users.each do |user| %>
-    <li><%= user.inspect %><%= link_to "参加者を評価する", post_evaluate_user_path(@user, post_id: post.id) %></li>
+    <li><%= user.inspect %><%= link_to "参加者を評価する", post_evaluate_user_path(@user, post_id: @post.id) %></li>
   <% end %>
 </ul>
+
+<%= link_to "前の画面に戻る", finished_posts_user_path(current_user) %>

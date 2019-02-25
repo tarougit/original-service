@@ -4,10 +4,13 @@
   <ul>
     <% @posts.each do |post| %>
       <li><%= link_to post.id, post %> : <%= post.title %></li>
-      <li><%= post.event_date %></li>
+      <!-- <li><%#= f.sports %></li> -->
+      <li><%= post.erea %></li>
+      <!-- <li><%#= f.event_date %></li> -->
       <li><%= post.open %></li>
       <li><%= post.closed %></li>
-      <li><%#= post.applicante %></li>
+      <!-- <li><%#= f.level %></li> -->
+      <!-- <li><%#= post.applicante %></li> -->
     <% end %>
   </ul>
 <%# end %>

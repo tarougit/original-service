@@ -1,0 +1,11 @@
+
+<h2><%= @post.title %>の承認プレイヤー一覧</h2>
+
+<ul>
+<% @relation_users.each do |user| %>
+   <li><%= user.name %></li>
+<% end %>
+</ul>
+
+
+<%= link_to "募集管理画面に戻る", post_users_user_path(current_user) %>
