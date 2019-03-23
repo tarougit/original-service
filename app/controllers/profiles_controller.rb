@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  # :require_logged_in, :profile_completed?
+  #before_action :require_user_logged_in, :profile_completed?
   before_action :require_user_logged_in, only: [:show, :new, :create, :edit, :update]
   
   def show
@@ -46,6 +46,7 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:icon, :active_area, :sex, :birthday, :sports, :level, :battle_record, :career, :image)
+    params.require(:profile).permit(:active_area, :sex, :birthday, :sports, :level, :battle_record, :career)
+    #params.require(:profile).permit(:icon, :active_area, :sex, :birthday, :sports, :level, :battle_record, :career, :image)
   end
 end

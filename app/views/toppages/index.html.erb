@@ -1,5 +1,5 @@
 
-  <div class="center">
+  <!-- <div class="center">
     <div class="col-xs-12">
       <div style="float:center;">
         <div class="panel panel-default">
@@ -13,21 +13,22 @@
               <!-- <%#= submit_tag "絞り込み" %><br><br>  -->
               <%# end %>
               <%# @posts.each do |post| %>
-                <%#= link_to post.id, post %> : <%#= post.inspect %><!-- <br> -->
+                <%#= link_to post.id, post %> <%#= post.inspect %><!-- <br> -->
               <%# end %>
-            </div>
+            <!-- </div>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="center">
     <div class="col-xs-12">
       <div style="float:center;">
         <div class="panel panel-default">
-          <div class="panel-heading">個人参加募集情報</div>  
+          <div class="panel-heading">サッカー、フットサル参加者募集情報</div>  
             <div class="panel-body">
               <% @posts.each do |post| %>
-                <%= post.inspect %><br>
+                <div>競　技：<%= post.sports %>&emsp;レベル：<%= post.level %>&emsp;<%= link_to post.title, post %></div>
+                <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>&emsp;開催エリア：<%= post.erea %></di><br><br>
               <% end %>
             </div>
         </div>

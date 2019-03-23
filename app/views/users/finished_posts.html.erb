@@ -2,7 +2,10 @@
   <%# postから 7日以内 && すでにpostに対して評価していなかったら  %>
   <%# if @posts.since(7.days) && !current_user.has_make_point?(@post) %>
     <% @posts.each do |post| %>
-        <li><%= post.inspect %><%= link_to "評価対象の参加者一覧へ", finished_users_user_path(@user, post_id: post.id) %></li>
+        <li>
+          <div>開催日：<%= post.event_date %>&emsp;会　場：<%= post.place %>&emsp;競　技：<%= post.sports %></div>
+          <div><%= link_to "評価対象の参加者一覧へ", finished_users_user_path(@user, post_id: post.id) %></div>
+        </li><br>
     <% end %>
   <%# end %>
   <%# end %>

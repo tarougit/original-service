@@ -2,11 +2,9 @@
 
 <ol>
     <%= form_for(@post) do |f| %>
-      <li><%= f.label :sports, :"競　技" %>
+      <li><%= f.label :sports, '競　技' %>
           <%= f.select :sports, [["サッカー"], ["フットサル"]] ,class:"form-control" %></li>
-    <% end %>
-
-    <%= form_for(@post) do |f| %>
+    
       <li><%= f.label :title, '募集のタイトル' %>
           <%= f.text_field :title %></li>
       

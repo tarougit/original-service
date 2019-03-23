@@ -1,4 +1,4 @@
-<h1><%= @post.title %> 内での<%= @user.name %> の評価</h1>
+<h1><%= @post.title %> 内での<%= @post_evaluate.name %> の評価</h1>
 
 <%= form_tag(url: "#") do %>
   <%= hidden_field_tag :post_id, @post.id %>

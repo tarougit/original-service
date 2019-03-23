@@ -69,15 +69,18 @@ class UsersController < ApplicationController
   
   def finished_posts #開催されたイベント(募集、応募 両方表示できるようにする)
     @user = User.find(params[:id])
-    @post_users = @user.posts #募集して終了したゲーム会
-    @relationship_posts = @user.relationship_posts #応募して終了したゲーム会
-    relation_posts = @post_users.approved_users || @relationship_posts.approved_users
-    current_relation_posts = current_user.post_users.approved_users || current_user.relationship_posts.approved_users
-    post_ids = []
-    relation_posts.each do |post|
-      post_ids << post.id if current_relation_posts.includ?(post)
-    end
-    @posts = Post.where(id: post_ids)
+    
+    reftime = Time.now.next_day.beginning_of_day.strftime("%Y-%m-%d")
+    @post_users = @user.posts.where("event_date < '#{reftime}'") ##終了したPostだけしゅとく
+    @relationship_posts = @user.relationship_posts.where("event_date < '#{reftime}'") #応募して終了したゲーム会
+   # relation_posts = @post_users.approved_users || @relationship_posts.approved_users
+   # current_relation_posts = current_user.post_users.approved_users || current_user.relationship_posts.approved_users
+    #post_ids = []
+    #relation_posts.each do |post|
+    #  post_ids << post.id if current_relation_posts.includ?(post)
+    #end
+    ids = post_users.ids + relationship_posts.ids
+    @posts = Post.find(ids).sort_by{|o| ids.index(o.event_date)}
   end
   
   #def finished_posts #開催されたイベント(募集、応募 両方表示する)
@@ -103,6 +106,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @post = Post.find(params[:post_id])
     @hexagons = Hexagon.all
+    @post_evaluate = @post.approved_users
   end
   
   def make_evaluate

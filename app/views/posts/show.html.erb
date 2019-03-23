@@ -1,24 +1,24 @@
 <h1><%= @post.user.name %> の募集内容</h1>
 
-<p><%= @post.sports %></p>
-<p><%= @post.title %></p>
-<p><%= @post.content %></p>
-<p><%= @post.event_date %></p>
-<p><%= @post.open %></p>
-<p><%= @post.closed %></p>
-<p><%= @post.due_date %></p>
-<p><%= @post.due_time %></p>
-<p><%= @post.erea %></p>
-<p><%= @post.place %></p>
-<p><%= @post.capacity %></p>
-<p><%= @post.cost %></p>
-<p><%= @post.level %></p>
-<p><%= @post.age_minimum %></p>
-<p><%= @post.age_maximum %></p>
-<p><%= @post.sex %></p>
+<p>競　技：<%= @post.sports %></p>
+<p>タイトル：<%= @post.title %></p>
+<p>募集内容：<%= @post.content %></p>
+<p>開催日：<%= @post.event_date.strftime("%Y年 %m月 %d日") %></p>
+<p>開始時間：<%= @post.open.strftime("%H時:%M分") %></p>
+<p>終了時間：<%= @post.closed.strftime("%H時:%M分") %></p>
+<p>締切日：<%= @post.due_date.strftime("%Y年 %m月 %d日") %></p>
+<p>締切時間：<%= @post.due_time.strftime("%H時:%M分") %></p>
+<p>開催エリア：<%= @post.erea %></p>
+<p>会　場：<%= @post.place %></p>
+<p>募集定員：<%= @post.capacity %></p>
+<p>費　用：<%= @post.cost %></p>
+<p>レベル：<%= @post.level %></p>
+<p>年齢層：<%= @post.age_minimum %>&emsp;～&emsp;<%= @post.age_maximum %></p>
+<p>性　別：<%= @post.sex %></p>
 
+
+<%= render 'relationships/reserve_button', post: @post %><br><br>
 <%= link_to '募集一覧に戻る', posts_path %><br>
-<%= render 'relationships/reserve_button', post: @post %>
 <% if (current_user == @post.user) %>
   <%= link_to 'この募集内容を編集する', edit_post_path(@post) %><br>
   <%= link_to 'このメッセージを削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>

@@ -3,14 +3,11 @@
 <%# if (@posts.user.due_date || @posts.user.capacity != @posts.due_date || @posts.posts.capacity) %>
   <ul>
     <% @posts.each do |post| %>
-      <li><%= link_to post.id, post %> : <%= post.title %></li>
-      <!-- <li><%#= f.sports %></li> -->
-      <li><%= post.erea %></li>
-      <!-- <li><%#= f.event_date %></li> -->
-      <li><%= post.open %></li>
-      <li><%= post.closed %></li>
-      <!-- <li><%#= f.level %></li> -->
-      <!-- <li><%#= post.applicante %></li> -->
+      <li><%= post.sports %>&emsp;<%= link_to post.title, post %></li>
+      <div><%= post.erea %>&emsp;レベル：<%= post.level %></div>
+      <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>
+      &emsp;時間帯：<%= post.open.strftime("%H時:%M分") %>
+      ～<%= post.closed.strftime("%H時:%M分") %></div>
     <% end %>
   </ul>
 <%# end %>
