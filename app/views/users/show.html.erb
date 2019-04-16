@@ -15,24 +15,27 @@
         <!--<h2 class="center">主催者評価：100</h2>-->
         <%= render 'profiles/profile', profile: @profile %>
       </div>
-       <ul class="nav nav-pills nav-stacked">
-          <li class="<%= 'active' if current_page?(user_path(@user)) %>"><%= link_to posts_path(@posts) do %>個人参加募集<span class="badge"><%= @count_posts %></span><% end %></li>
-<!--        	<li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
-          <li><%= link_to "募集に応募する", posts_path %></li>
+      <ul class="nav nav-pills nav-stacked">
+        <li><%= link_to "募集する", posts_path %></li>
+        <!--<li class="<%#= 'active' if current_page?(user_path(@user)) %>"><%#= link_to posts_path(@posts) do %>個人参加募集<span class="badge"><%#= @count_posts %></span><%# end %></li> -->
+          <!-- <li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
+        <li><%= link_to "募集に応募する", posts_path %></li>
           
-          <% if @user.profile.present? %>
-    			  <li><%= link_to "プロフィール変更", user_profiles_path(@user) %></li>
-    			<% else %>
-    			  <li><%= link_to "プロフィール設定", new_user_profiles_path(@user) %></li>
-    			<% end %>
+        <% if @user.profile.present? %>
+    		  <li><%= link_to "プロフィール変更", user_profiles_path(@user) %></li>
+    		<% else %>
+    		  <li><%= link_to "プロフィール設定", new_user_profiles_path(@user) %></li>
+    		<% end %>
 
-        	<%# if  current_user.lastmatchday <= 7 %>
-        	<li><%= link_to "評価する", finished_posts_user_path(@user) %></li>
-        	<%# end %>
-        	<%# if  current_user.lastmatchday <= 7 %>
-        	<!--<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>-->
-        	<%# end %>
-        </ul>
+      	<%# if  current_user.last.event_date <= 7 %>
+      	  <% if @user == current_user %>
+      	  <li><%= link_to "評価する", finished_posts_user_path(@user) %></li>
+      	  <% end %>
+      	<%# end %>
+      	<%# if  current_user.lastmatchday <= 7 %>
+      	<!--<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>-->
+      	<%# end %>
+      </ul>
     </div>
   </aside>
 

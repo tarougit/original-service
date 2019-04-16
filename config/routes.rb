@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
   resources :relationships, only: [:create, :destroy, :update]
-  resources :points, only: [:create]
+  resources :points, only: [:create, :destroy]
   resources :hexagons, only: [:show, :create, :edit, :update]
   
   resources :users

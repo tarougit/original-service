@@ -4,7 +4,13 @@
     <% @posts.each do |post| %>
         <li>
           <div>開催日：<%= post.event_date %>&emsp;会　場：<%= post.place %>&emsp;競　技：<%= post.sports %></div>
-          <div><%= link_to "評価対象の参加者一覧へ", finished_users_user_path(@user, post_id: post.id) %></div>
+          <div>
+            <% if current_user.has_make_point?(post) %>
+              評価済みです。
+            <% else %>
+              <%= link_to "評価対象の参加者一覧へ", finished_users_user_path(@user, post_id: post.id) %>
+            <% end %>
+          </div>
         </li><br>
     <% end %>
   <%# end %>

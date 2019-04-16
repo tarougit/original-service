@@ -28,9 +28,8 @@ class User < ApplicationRecord
   end
   
   def relationship?(other_post)
-    self.relationships.include?(other_post)
+    self.relationship_posts.include?(other_post)
   end
-  
   
   #=> #<ActiveRecord::Relation
   # [#<Point id: 1, post_id: 16, user_id: 1, evaluated_user_id: 6, hexagon_id: 1, created_at: "2018-12-05 12:06:58", updated_at: "2018-12-05 12:06:58">]> 

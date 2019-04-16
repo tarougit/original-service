@@ -63,7 +63,7 @@ class PostsController < ApplicationController
   end
   
   #def search_posts #絞り込み検索機能
-   # raise_errror
+    #raise_errror
     
     #query_string = ""
     #if (params[:sports]  != "")

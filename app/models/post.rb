@@ -13,4 +13,9 @@ class Post < ApplicationRecord
    def has_approved?(user)
      self.approved_users.include?(user)
    end
+   
+   
+   def has_apply?(user)
+     self.users.include?(user)
+   end
 end

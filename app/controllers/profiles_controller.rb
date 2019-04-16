@@ -4,6 +4,7 @@ class ProfilesController < ApplicationController
   
   def show
     @profile = Profile.find(params[:user_id])
+    @profile = nil || return
   end
 
   def new

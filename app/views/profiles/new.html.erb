@@ -30,4 +30,5 @@
   
   <%= f.submit 'プロフィール設定' %>
   <% end %>
-</ol>
+</ol><br><br><br>
+<div><%= link_to '退　会', user_path(current_user), method: :delete, data: { confirm: "本当に退会しますか？" } %></div>

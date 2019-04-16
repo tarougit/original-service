@@ -1,5 +1,9 @@
 <% @relationship_posts.each do |post| %>
   
-  <%= post.inspect %><br><br>
-  <%#= render 'relationships/reserve_button', post: @post %>
+  <div><%= post.sports %>&emsp;<%= post.title %>&emsp;<%= post.user.name %></div>
+  <div><%= post.erea %>&emsp;レベル：<%= post.level %></div>
+  <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>
+  &emsp;時間帯：<%= post.open.strftime("%H時:%M分") %>
+  ～<%= post.closed.strftime("%H時:%M分") %></div>
+  <%= link_to '詳　細', post %><br><br>
 <% end %>

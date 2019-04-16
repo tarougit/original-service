@@ -102,7 +102,7 @@ class UsersController < ApplicationController
     @finished_users = @post.approved_users
   end
   
-  def post_evaluate #評価する参加者
+  def post_evaluate #私が評価する参加者
     @user = User.find(params[:id])
     @post = Post.find(params[:post_id])
     @hexagons = Hexagon.all
@@ -115,13 +115,19 @@ class UsersController < ApplicationController
     
     @user = User.find(params[:id])
     
+    if (current_user.has_make_point?(@post))
+      flash[:alert] = "既に評価済みです。"
+      redirect_back(fallback_location: root_url)
+      return
+    end
+    
     #if ((@user != current_user) &&
     #   (post.eventdate.since(7.days) > Time.now ) &&
     #   (!current_user.has_make_point?(@post)))
     # current_user postにおいて既にpoint付与済みかどうか？
     # post 7日以内か？
     
-       p =  @user.points.build(evaluated_user_id: current_user.id,
+       p =  current_user.points.build(evaluated_user_id: @user.id,
                         hexagon_id: @ev_kind, post_id: @post.id)
        p.save
     #end

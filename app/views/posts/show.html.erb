@@ -17,11 +17,12 @@
 <p>性　別：<%= @post.sex %></p>
 
 
-<%= render 'relationships/reserve_button', post: @post %><br><br>
+  <%= render 'relationships/reserve_button', post: @post %><br><br>
+
 <%= link_to '募集一覧に戻る', posts_path %><br>
 <% if (current_user == @post.user) %>
   <%= link_to 'この募集内容を編集する', edit_post_path(@post) %><br>
-  <%= link_to 'このメッセージを削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
+  <%= link_to 'この募集を削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
 
   <%= render 'relationships/relationship_users', post: @post %>
 <% end %>
