@@ -6,4 +6,10 @@
   &emsp;時間帯：<%= post.open.strftime("%H時:%M分") %>
   ～<%= post.closed.strftime("%H時:%M分") %></div>
   <%= link_to '詳　細', post %><br><br>
+  
+  <% if current_user.has_status?(post) %>
+    <span class="label label-primary">応募が承認されました</span>
+  <% else %>
+    <span class="label label-danger">応募はまだ、承認されていません</span>
+  <% end %>
 <% end %>

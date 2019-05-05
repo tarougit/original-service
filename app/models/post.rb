@@ -1,6 +1,8 @@
 class Post < ApplicationRecord
+  default_scope -> { order(created_at: :desc) }
+
   belongs_to :user
-  
+    
   has_many :relationships
   has_many :users, through: :relationships, source: :user
   
@@ -15,7 +17,7 @@ class Post < ApplicationRecord
    end
    
    
-   def has_apply?(user)
-     self.users.include?(user)
-   end
+   #def has_apply?(user)
+     #self.users.include?(user)
+   #end
 end

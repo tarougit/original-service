@@ -31,6 +31,13 @@ class RelationshipsController < ApplicationController
     end
   end
   
+  #def discontinue_post
+    #post = Post.find(params[:post_id])
+    #current_user.discontinue_post(post)
+    #flash[:success] = '中止しました'
+    #redirect_back(fallback_location: root_path)
+  #end
+  
   private
   
   # Strong Parameter

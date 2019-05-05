@@ -4,7 +4,6 @@ class ProfilesController < ApplicationController
   
   def show
     @profile = Profile.find(params[:user_id])
-    @profile = nil || return
   end
 
   def new
@@ -47,7 +46,7 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:active_area, :sex, :birthday, :sports, :level, :battle_record, :career)
+    params.require(:profile).permit(:active_area, :sex, :birthday, :sports, :level, :level_maximum, :battle_record, :career)
     #params.require(:profile).permit(:icon, :active_area, :sex, :birthday, :sports, :level, :battle_record, :career, :image)
   end
 end

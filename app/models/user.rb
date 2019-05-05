@@ -14,9 +14,10 @@ class User < ApplicationRecord
   
   has_one :profile
   
-  has_one :hexagon
+  #has_one :hexagon
   
-  has_many :points
+  has_many :points, dependent: :destroy
+  #has_many :statuses, ->{where('relationships.status' => 1)}
   
   def relationship(other_post)
     self.relationships.find_or_create_by(post_id: other_post.id)
@@ -35,7 +36,17 @@ class User < ApplicationRecord
   # [#<Point id: 1, post_id: 16, user_id: 1, evaluated_user_id: 6, hexagon_id: 1, created_at: "2018-12-05 12:06:58", updated_at: "2018-12-05 12:06:58">]> 
 
   def has_make_point?(post)
-    if (self.points.find_by(post_id: post.id))
+    
+    if (Point.where(post_id: post.id).find_by(evaluate_user_id: self.id))
+      return true
+    else
+      return false
+    end
+  end
+  
+  def has_status?(post)
+    relationship = post.relationships.find_by(user_id: self.id)
+    if (relationship != nil && relationship.status == 1)
       return true
     else
       return false

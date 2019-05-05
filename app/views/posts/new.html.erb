@@ -29,10 +29,14 @@
           <%= f.select :erea, [["東京都"], ["埼玉県"], ["神奈川県"]] %></li>
           
       <li><%= f.label :place, '会　場' %><spacer>
-          会場を
-          <input type="radio" name="seibetu" value="0">確保している
-          <input type="radio" name="seibetu" value="1">確保していない
-          <%= f.text_field :place %></li>
+          &emsp;会場を
+          <%= f.radio_button :reserve, "0" %>
+          <%= f.label :reserve, "予約済み" %>
+          <%= f.radio_button :reserve, "1" %>
+          <%= f.label :reserve, "予約していない" %>
+          <!-- <input type="radio" name="予約済み" value="0">
+          <input type="radio" name="予約" value="1"> -->
+          &emsp;会場名<%= f.text_field :place %></li>
           
       <li><%= f.label :capacity, '定　員' %>
           <%= f.text_field :capacity %></li>

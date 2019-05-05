@@ -21,16 +21,16 @@
           <!-- <li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
         <li><%= link_to "募集に応募する", posts_path %></li>
           
-        <% if @user.profile.present? %>
-    		  <li><%= link_to "プロフィール変更", user_profiles_path(@user) %></li>
-    		<% else %>
-    		  <li><%= link_to "プロフィール設定", new_user_profiles_path(@user) %></li>
-    		<% end %>
+        <%# if @user.profile.present? %>
+    		  <!-- <li><%#= link_to "プロフィール変更", user_profiles_path(@user) %></li>
+    		<%# else %>
+    		  <li><%#= link_to "プロフィール設定", new_user_profiles_path(@user) %></li> -->
+    		<%# end %>
 
       	<%# if  current_user.last.event_date <= 7 %>
-      	  <% if @user == current_user %>
+      	<% if @user == current_user %>
       	  <li><%= link_to "評価する", finished_posts_user_path(@user) %></li>
-      	  <% end %>
+      	<% end %>
       	<%# end %>
       	<%# if  current_user.lastmatchday <= 7 %>
       	<!--<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>-->
@@ -80,19 +80,20 @@
 </div> -->
 
 <div class="row">
-  <aside class="col-xs-10">
+  <aside class="col-xs-6-offset-4">
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="center">個人参加募集</div>
       </div>
       <div class="panel-body">
-        <%= render 'posts/posts', posts: @posts %>
+        <%#= render 'posts/posts', posts: @posts %>
         <%= link_to "募集管理ページ", post_users_user_path %><br>
         <%#= link_to "参加者リスト", users_path %>
       </div>
     </div>
   </aside>
 </div>
+
 <div class="row">
   <aside class="col-xs-10">
     <div class="panel panel-default">
@@ -106,6 +107,7 @@
   </aside>
 </div>
 
+<div class="pull-right"><%= link_to '退　会', user_path(current_user), method: :delete, class:"btn btn-danger", data: { confirm: "本当に退会しますか？" } %></div>
 <canvas id="testCanvas">
 
 <script>

@@ -12,27 +12,31 @@
           <%= f.text_field :content %></li>
     
       <li><%= f.label :event_date, '開催日' %>
-          <%= date_select :page, :updated_at, :use_month_numbers => true, :start_year => 2018 %></li>
+          <%= f.date_select :event_date, :use_month_numbers => true, :start_year => 2018 %></li>
       
       <li><%= f.label :open, '開始時間' %>
-          <%= time_select :page, :updated_at, :minute_step => 10 %>～
+          <%= f.time_select :open, :minute_step => 10 %>～
           <%= f.label :closed, '終了時間' %>
-          <%= time_select :page, :updated_at, :minute_step => 10 %></li>
+          <%= f.time_select :closed, :minute_step => 10 %></li>
           
       <li><%= f.label :due_date, '締切日付' %>
-          <%= date_select :page, :updated_at, :use_month_numbers => true, :start_year => 2018 %></li>
+          <%= f.date_select :due_date, :use_month_numbers => true, :start_year => 2018 %></li>
           
       <li><%= f.label :due_time, '締切時間' %>
-          <%= time_select :page, :updated_at, :minute_step => 10 %></li>
+          <%= f.time_select :due_time, :minute_step => 10 %></li>
           
       <li><%= f.label :erea, '開催エリア' %>
           <%= f.text_field :erea %></li>
           
       <li><%= f.label :place, '会　場' %><spacer>
-          会場を
-          <input type="radio" name="seibetu" value="0">確保している
-          <input type="radio" name="seibetu" value="1">確保していない
-          <%= f.text_field :place %></li>
+          &emsp;会場を
+          <%= f.radio_button :reserve, "0" %>
+          <%= f.label :reserve, "予約済み" %>
+          <%= f.radio_button :reserve, "1" %>
+          <%= f.label :reserve, "予約していない" %>
+          <!-- <input type="radio" name="予約済み" value="0">
+          <input type="radio" name="予約していない" value="1"> -->
+          &emsp;会場名<%= f.text_field :place %></li>
           
       <li><%= f.label :capacity, '定　員' %>
           <%= f.text_field :capacity %></li>

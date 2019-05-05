@@ -1,0 +1,6 @@
+<%# if current_user == @post.user %>
+  <%# form_for(current_user.find_by(post_id: post.id)) do |f| %>
+    <%#= hidden_field_tag :post_id, @post.id %>
+    <%#= f.submit '中止する', class: 'btn btn-danger' %>
+  <%# end %>
+<%# end %>

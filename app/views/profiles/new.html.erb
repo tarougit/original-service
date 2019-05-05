@@ -1,34 +1,39 @@
 <h1>プロフィール設定</h1>
-
+<div class="row">
+<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">
 <ol>
   <%= form_for(@profile, url: user_profiles_path(@user)) do |f| %>
     <%#= f.label :image %>
     <%#= f.file_field :image %>
 
 
-  <li><%= f.label :active_area, '活動エリア' %> 
-      <%= f.text_field :active_area, :placeholder => "東京都" %></li>
+  <li class="form-group"><%= f.label :active_area, '活動エリア' %> 
+      <%= f.text_field :active_area, :placeholder => "例)東京都", class:"form-control" %></li>
     
-  <li><%= f.label :sex, :"性　別" %>
-      <%= f.select :sex, [["男"], ["女"]] %></li>
+  <li class="form-group"><%= f.label :sex, :"性　別" %>
+      <%= f.select :sex, [["男"], ["女"]], prompt:"選択してください", class:"form-control" %></li>
 
-  <li><%= f.label :birthday, :"年齢層" %>
-      <%= f.select :birthday, [["10代"], ["20代"], ["30代"], ["40代"], ["50代"], ["60代以上"]] %></li>
-      
-  <li><%= f.label :sports, :"競　技" %>
-      <%= f.select :sports, [["サッカー"], ["フットサル"], ["サッカーとフットサル"]] %></li>
+  <li class="form-group"><%= f.label :birthday, :"年齢層" %>
+      <%#= f.select :birthday, [["10代"], ["20代"], ["30代"], ["40代"], ["50代"], ["60代以上"]], prompt:"選択してください" , class:"form-control" %></li>
+            <%= f.date_field :birthday, value: "1980-01-01" %>
+  <li class="form-group"><%= f.label :sports, :"競　技" %>
+      <%= f.select :sports, [["サッカー"], ["フットサル"], ["サッカーとフットサル"]], prompt:"選択してください", class:"form-control"  %></li>
     
-  <li><%= f.label :level, '個人参加　参加レベル' %>
-      <%= f.select :level, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]] %>～
-      <%= f.select :level, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]] %></li>
+  <li class="form-group"><%= f.label :level, '個人参加　参加レベル' %>
+      <%= f.select :level, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]], prompt:"未選択"  %>～
+      <%= f.select :level_maximum, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]], prompt:"未選択" %></li>
       
-  <li><%= f.label :battle_record, '戦　績' %>
-      <%= f.text_field :battle_record, :placeholder => "サッカー東京２部リーグ出場：優勝" %></li>
+  <li class="form-group"><%= f.label :battle_record, '戦　績' %>
+      <%= f.text_field :battle_record, :placeholder => "例）サッカー東京２部リーグ出場：優勝", class:"form-control" %></li>
       
-  <li><%= f.label :career, '経　歴' %>
-      <%= f.text_field :career, :placeholder => "全国高校サッカー選手権出場：ベスト８" %></li>
-  
-  <%= f.submit 'プロフィール設定' %>
+  <li class="form-group"><%= f.label :career, '経　歴' %>
+      <%= f.text_field :career, :placeholder => "例）全国高校サッカー選手権出場：ベスト８", class:"form-control" %></li>
+  <div class="form-group">
+  <%= f.submit 'プロフィール設定', class:"btn btn-primary" %>
+  </div>
   <% end %>
-</ol><br><br><br>
-<div><%= link_to '退　会', user_path(current_user), method: :delete, data: { confirm: "本当に退会しますか？" } %></div>
+</ol>
+</div>
+</div>
+<br><br><br>
+<div><%= link_to '退　会', user_path(current_user), method: :delete, class:"btn btn-danger", data: { confirm: "本当に退会しますか？" } %></div>

@@ -45,6 +45,9 @@ class UsersController < ApplicationController
   
   def destroy
     @user = User.find(params[:id])
+    
+    @user.profile.destroy if @user.profile
+    @user.relationships.destroy_all if @user.relationships.any?
       @user.delete
       flash[:success] = '退会しました'
       redirect_to root_url
@@ -60,6 +63,16 @@ class UsersController < ApplicationController
   def relationship_posts #応 募
     @user = User.find(params[:id])
     @relationship_posts = @user.relationship_posts.page(params[:page])
+    
+    #if (current_user.has_status?(@relationship_posts))
+      #flash[:alart] = '応募が承認されました'
+      #redirect_back(fallback_location: root_url)
+      #return
+    #else
+      #flash[:danger] = 'まだ承認されていません'
+      #redirect_back(fallback_location: root_url)
+      #return
+    #end
   end
   
   def profile #プロフィール設定
@@ -99,7 +112,7 @@ class UsersController < ApplicationController
     
     @post = Post.find(params[:post_id])
     # @post = Post.where(@user, :status, value: user.ids)
-    @finished_users = @post.approved_users
+    @finished_users = @post.approved_users.where.not(id: current_user.id)
   end
   
   def post_evaluate #私が評価する参加者
@@ -121,17 +134,23 @@ class UsersController < ApplicationController
       return
     end
     
-    #if ((@user != current_user) &&
-    #   (post.eventdate.since(7.days) > Time.now ) &&
-    #   (!current_user.has_make_point?(@post)))
+    if ((@user == current_user) ||
+       (@post.event_date.since(7.days) < Time.now ) ||
+       (@post.event_date > Time.now ) && (@post.closed > Time.now))
+      flash[:alert] = "評価できません。"
+      redirect_back(fallback_location: root_url)
+      return       
+    end
     # current_user postにおいて既にpoint付与済みかどうか？
     # post 7日以内か？
     
-       p =  current_user.points.build(evaluated_user_id: @user.id,
-                        hexagon_id: @ev_kind, post_id: @post.id)
-       p.save
+
+     p =  @user.points.build(evaluate_user_id: current_user.id,
+                      hexagon_id: @ev_kind, post_id: @post.id)
+     p.save
+
     #end
-    redirect_to @user
+    redirect_to current_user
   end
   
   #def relation_users #承認されたユーザー一覧

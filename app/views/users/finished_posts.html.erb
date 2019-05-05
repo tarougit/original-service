@@ -3,6 +3,7 @@
   <%# if @posts.since(7.days) && !current_user.has_make_point?(@post) %>
     <% @posts.each do |post| %>
         <li>
+          <div>タイトル：<%= post.title %>&emsp;主催者：<%= post.user.name %></div>
           <div>開催日：<%= post.event_date %>&emsp;会　場：<%= post.place %>&emsp;競　技：<%= post.sports %></div>
           <div>
             <% if current_user.has_make_point?(post) %>

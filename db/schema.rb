@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190211124327) do
+ActiveRecord::Schema.define(version: 20190429060505) do
 
   create_table "hexagons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -21,11 +21,11 @@ ActiveRecord::Schema.define(version: 20190211124327) do
   create_table "points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "post_id"
     t.integer  "user_id"
-    t.integer  "evaluated_user_id"
+    t.integer  "evaluate_user_id"
     t.integer  "hexagon_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["evaluated_user_id"], name: "index_points_on_evaluated_user_id", using: :btree
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["evaluate_user_id"], name: "index_points_on_evaluate_user_id", using: :btree
     t.index ["hexagon_id"], name: "index_points_on_hexagon_id", using: :btree
     t.index ["post_id"], name: "index_points_on_post_id", using: :btree
     t.index ["user_id"], name: "index_points_on_user_id", using: :btree
@@ -49,19 +49,14 @@ ActiveRecord::Schema.define(version: 20190211124327) do
     t.integer  "age_minimum"
     t.integer  "age_maximum"
     t.string   "sex"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "reserve",                   default: 0
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
   end
 
   create_table "profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "icon"
-    t.integer  "pass"
-    t.integer  "dribble"
-    t.integer  "shoot"
-    t.integer  "body_control"
-    t.integer  "judgement"
-    t.integer  "speed"
     t.string   "active_area"
     t.string   "sex"
     t.date     "birthday"
@@ -71,8 +66,8 @@ ActiveRecord::Schema.define(version: 20190211124327) do
     t.text     "career",        limit: 65535
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "image"
     t.integer  "user_id"
+    t.string   "level_maximum"
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
   end
 
@@ -98,7 +93,7 @@ ActiveRecord::Schema.define(version: 20190211124327) do
   add_foreign_key "points", "hexagons"
   add_foreign_key "points", "posts"
   add_foreign_key "points", "users"
-  add_foreign_key "points", "users", column: "evaluated_user_id"
+  add_foreign_key "points", "users", column: "evaluate_user_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "relationships", "posts"
   add_foreign_key "relationships", "users"
