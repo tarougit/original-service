@@ -1,156 +1,163 @@
-<div class="row">
-  <aside class="col-xs-6 col-md-4">
+<% if !@user.unsubscribe? %>
+  <div class="row">
+    <aside class="col-xs-6 col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="center">プロフィール</div>
+        </div>
+        <div class="panel-body">
+          <img class="media-object img-rounded img-responsive" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
+          <h2 class="center"><%= @user.name %></h2>
+          <!-- ここから公開設定によって表示、非表示 -->
+          <!--<h2 class="center">性　別</h2>-->
+          <!--<h2 class="center">年　齢</h2>-->
+          <!-- ここまで公開設定 -->
+          <!--<h2 class="center">活動エリア</h2>-->
+          <!--<h2 class="center">主催者評価：100</h2>-->
+          <%= render 'profiles/profile', profile: @profile %>
+        </div>
+        <ul class="nav nav-pills nav-stacked">
+          <li><%= link_to "募集する", posts_path %></li>
+          <!--<li class="<%#= 'active' if current_page?(user_path(@user)) %>"><%#= link_to posts_path(@posts) do %>個人参加募集<span class="badge"><%#= @count_posts %></span><%# end %></li> -->
+            <!-- <li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
+          <li><%= link_to "募集に応募する", posts_path %></li>
+            
+          <%# if @user.profile.present? %>
+      		  <!-- <li><%#= link_to "プロフィール変更", user_profiles_path(@user) %></li>
+      		<%# else %>
+      		  <li><%#= link_to "プロフィール設定", new_user_profiles_path(@user) %></li> -->
+      		<%# end %>
+  
+        	<%# if  current_user.last.event_date <= 7 %>
+        	<% if @user == current_user %>
+        	  <li><%= link_to "評価する", finished_posts_user_path(@user) %></li>
+        	<% end %>
+        	<%# end %>
+        	<%# if  current_user.lastmatchday <= 7 %>
+        	<!--<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>-->
+        	<%# end %>
+        </ul>
+      </div>
+    </aside>
+  
+    <div class="col-xs-12 col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class=center>ステータスグラフ</div>
+        </div>
+        <!-- <div class="right">参加レベル：<%#= 5中級 %></div>
+        <div class="right">通算ゲーム数：<%#= 100 %></div> -->
+      </div>
+        <div class="panel-body">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+                <!--レーダーチャートを描画する Canvas-->
+                <!-- チャート描画キャンバス -->
+          <div>
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <!-- <div class="col-xs-8">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="center">プロフィール</div>
+        <div class="center">出場大会</div>
       </div>
-      <div class="panel-body">
-        <img class="media-object img-rounded img-responsive" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
-        <h2 class="center"><%= @user.name %></h2>
-        <!-- ここから公開設定によって表示、非表示 -->
-        <!--<h2 class="center">性　別</h2>-->
-        <!--<h2 class="center">年　齢</h2>-->
-        <!-- ここまで公開設定 -->
-        <!--<h2 class="center">活動エリア</h2>-->
-        <!--<h2 class="center">主催者評価：100</h2>-->
-        <%= render 'profiles/profile', profile: @profile %>
-      </div>
-      <ul class="nav nav-pills nav-stacked">
-        <li><%= link_to "募集する", posts_path %></li>
-        <!--<li class="<%#= 'active' if current_page?(user_path(@user)) %>"><%#= link_to posts_path(@posts) do %>個人参加募集<span class="badge"><%#= @count_posts %></span><%# end %></li> -->
-          <!-- <li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
-        <li><%= link_to "募集に応募する", posts_path %></li>
-          
-        <%# if @user.profile.present? %>
-    		  <!-- <li><%#= link_to "プロフィール変更", user_profiles_path(@user) %></li>
-    		<%# else %>
-    		  <li><%#= link_to "プロフィール設定", new_user_profiles_path(@user) %></li> -->
-    		<%# end %>
-
-      	<%# if  current_user.last.event_date <= 7 %>
-      	<% if @user == current_user %>
-      	  <li><%= link_to "評価する", finished_posts_user_path(@user) %></li>
-      	<% end %>
-      	<%# end %>
-      	<%# if  current_user.lastmatchday <= 7 %>
-      	<!--<li role="presentation"><a href="#">デフォルトメンバーのお誘い</a></li>-->
-      	<%# end %>
-      </ul>
-    </div>
-  </aside>
-
-  <div class="col-xs-12 col-md-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class=center>ステータスグラフ</div>
-      </div>
-      <!-- <div class="right">参加レベル：<%#= 5中級 %></div>
-      <div class="right">通算ゲーム数：<%#= 100 %></div> -->
-    </div>
-      <div class="panel-body">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
-              <!--レーダーチャートを描画する Canvas-->
-              <!-- チャート描画キャンバス -->
-        <div>
-          <canvas id="myChart"></canvas>
+        <div class="panel-body">
+          <p>全国大会</p>
         </div>
       </div>
   </div>
-</div>
-
-<!-- <div class="col-xs-8">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="center">出場大会</div>
-    </div>
-      <div class="panel-body">
-        <p>全国大会</p>
-      </div>
-    </div>
-</div>
-<div class="col-xs-8">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="center">経　歴</div>
-    </div>
-      <div class="panel-body">
-        <p>2010~2012 FC東京U-18所属</p>
-      </div>
-    </div>
-</div> -->
-
-<div class="row">
-  <aside class="col-xs-6-offset-4">
+  <div class="col-xs-8">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <div class="center">個人参加募集</div>
+        <div class="center">経　歴</div>
       </div>
-      <div class="panel-body">
-        <%#= render 'posts/posts', posts: @posts %>
-        <%= link_to "募集管理ページ", post_users_user_path %><br>
-        <%#= link_to "参加者リスト", users_path %>
+        <div class="panel-body">
+          <p>2010~2012 FC東京U-18所属</p>
+        </div>
       </div>
-    </div>
-  </aside>
-</div>
-
-<div class="row">
-  <aside class="col-xs-10">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="center">個人参加応募</div>
+  </div> -->
+  
+  <div class="row">
+    <aside class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="center">個人参加募集</div>
+        </div>
+        <div class="panel-body">
+          <%#= render 'posts/posts', posts: @posts %>
+          <%= link_to "募集管理ページ", post_users_user_path %><br>
+          <%#= link_to "参加者リスト", users_path %>
+        </div>
       </div>
-      <div class="panel-body">
-        <%= link_to "個人参加応募一覧", relationship_posts_user_path %>
+    </aside>
+  </div>
+  
+  <div class="row">
+    <aside class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="center">個人参加応募</div>
+        </div>
+        <div class="panel-body">
+          <%= link_to "個人参加応募一覧", relationship_posts_user_path %>
+        </div>
       </div>
-    </div>
-  </aside>
-</div>
-
-<div class="pull-right"><%= link_to '退　会', user_path(current_user), method: :delete, class:"btn btn-danger", data: { confirm: "本当に退会しますか？" } %></div>
-<canvas id="testCanvas">
-
-<script>
-var ctx = document.getElementById("myChart").getContext('2d');
-var myRadarChart = new Chart(ctx, {
-    type: 'radar',
-    data: {
-        labels: ["ドリブル", "シュート", "スピード", "パス", "判断力", "体の使いかた"],
-        datasets: [{
-            label: 'ステータス',
-            // data: [12, 19, 3, 5, 2, 3],
-            data: <%= @summary_data %>,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-  options: {
-    scale: {
-      pointLabels: {
-        fontSize: 14 //フォントサイズ
+    </aside>
+  </div>
+  
+  <div class="pull-right"><%= link_to '退　会', user_path(current_user), method: :delete, class:"btn btn-danger", data: { confirm: "本当に退会しますか？" } %></div>
+  <canvas id="testCanvas">
+  
+  <script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myRadarChart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+          labels: ["ドリブル", "シュート", "スピード", "パス", "判断力", "体の使いかた"],
+          datasets: [{
+              label: 'ステータス',
+              // data: [12, 19, 3, 5, 2, 3],
+              data: <%= @summary_data %>,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
       },
-      ticks: { //http://www.chartjs.org/docs/#scales-radial-linear-scale
-        stepSize: 1, // 目盛の間隔
-        max: 20, //最大値
-        beginAtZero: true
+    options: {
+      scale: {
+        pointLabels: {
+          fontSize: 14 //フォントサイズ
+        },
+        ticks: { //http://www.chartjs.org/docs/#scales-radial-linear-scale
+          stepSize: 1, // 目盛の間隔
+          max: 10, //最大値
+          beginAtZero: true
+        }
       }
     }
-  }
-});
-</script>
-
+  });
+  </script>
+<% else %>
+  退会済みです。
+  <%= form_for(@user) do |f| %>
+    <%= hidden_field_tag :state, 1 %>
+    <%= f.submit "公開に戻す" %>
+  <% end %>
+<% end %>

@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    @user = User.new(state: :release)
   end
 
   def create
@@ -41,16 +41,31 @@ class UsersController < ApplicationController
   end
   
   def update
+    @user = User.find(params[:id])
+
+    if params[:state].present?
+      @user.state = params[:state].to_i
+      @user.save
+      flash[:success] = 'ユーザを復活しました。'
+      redirect_to @user
+    elsif @user.update(user_params)
+      flash[:success] = 'ユーザを更新しました。'
+      redirect_to @user
+    else
+      flash.now[:danger] = 'ユーザの編集に失敗しました。'
+      render :new
+    end
   end
   
   def destroy
     @user = User.find(params[:id])
     
-    @user.profile.destroy if @user.profile
-    @user.relationships.destroy_all if @user.relationships.any?
-      @user.delete
+    #@user.profile.destroy if @user.profile
+    # @user.relationships.destroy_all if @user.relationships.any?
+      #@user.delete
+      @user.update(state: :unsubscribe)
       flash[:success] = '退会しました'
-      redirect_to root_url
+      redirect_to @user
   end
   
   def post_users #募集投稿
@@ -75,10 +90,10 @@ class UsersController < ApplicationController
     #end
   end
   
-  def profile #プロフィール設定
-    @user = User.find(params[:id])
-    @profile = @user.build_profile
-  end
+  #def profile #プロフィール設定
+    #@user = User.find(params[:id])
+    #@profile = @user.build_profile
+  #end
   
   def finished_posts #開催されたイベント(募集、応募 両方表示できるようにする)
     @user = User.find(params[:id])
@@ -136,10 +151,17 @@ class UsersController < ApplicationController
     
     if ((@user == current_user) ||
        (@post.event_date.since(7.days) < Time.now ) ||
-       (@post.event_date > Time.now ) && (@post.closed > Time.now))
+       (@post.event_date > Time.now ))
       flash[:alert] = "評価できません。"
       redirect_back(fallback_location: root_url)
       return       
+    end
+    
+    if ((@user == current_user) ||
+       (@post.closed > Time.now))
+      flash[:alart] = "まだ評価できません。"
+      redirect_back(fallback_location: root_url)
+      return
     end
     # current_user postにおいて既にpoint付与済みかどうか？
     # post 7日以内か？

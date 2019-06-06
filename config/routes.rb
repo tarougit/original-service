@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   
   # root to: 'relationships#index'
-  resources :users, only: [:show, :new, :create, :destroy] do
-    resource :profiles, only: [:show, :new, :create, :edit, :update]
+  resources :users, only: [:show, :new, :create, :update, :destroy] do
+    #resource :profiles, only: [:show, :new, :create, :edit, :update]
     member do
       get :relationship_posts
       get :post_users

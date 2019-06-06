@@ -12,7 +12,7 @@ class User < ApplicationRecord
   #has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'post_user_id'
   #has_many :reserves, through: :reverses_of_relationship, source: :user
   
-  has_one :profile
+  #has_one :profile
   
   #has_one :hexagon
   
@@ -52,4 +52,6 @@ class User < ApplicationRecord
       return false
     end
   end
+  
+  enum state: { release: 1, privacy: 2, unsubscribe: 3 }
 end

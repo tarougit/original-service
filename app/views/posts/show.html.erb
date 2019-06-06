@@ -29,8 +29,10 @@
 
 <%= link_to '募集一覧に戻る', posts_path %><br>
 <% if (current_user == @post.user) %>
-  <%= link_to 'この募集内容を編集する', edit_post_path(@post) %><br>
-  <%= link_to 'この募集を削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
-  <%#= render 'relationships/discontinue_button', post: @post %> <!-- 中止ボタン -->
-  <%= render 'relationships/relationship_users', post: @post %>
+  <% if @post.event_date > Time.now %>
+    <%= link_to 'この募集内容を編集する', edit_post_path(@post) %><br>
+    <%= link_to 'この募集を削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
+    <%#= render 'relationships/discontinue_button', post: @post %> <!-- 中止ボタン -->
+    <%= render 'relationships/relationship_users', post: @post %>
+  <% end %>
 <% end %>

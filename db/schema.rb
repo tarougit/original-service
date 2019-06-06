@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190429060505) do
+ActiveRecord::Schema.define(version: 20190602060652) do
 
   create_table "hexagons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -86,14 +86,14 @@ ActiveRecord::Schema.define(version: 20190429060505) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "state",           default: 1
   end
 
   add_foreign_key "points", "hexagons"
   add_foreign_key "points", "posts"
   add_foreign_key "points", "users"
-  add_foreign_key "points", "users", column: "evaluate_user_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "relationships", "posts"
   add_foreign_key "relationships", "users"
