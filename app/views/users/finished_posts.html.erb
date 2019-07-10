@@ -1,10 +1,18 @@
-<ul>
-  <%# postから 7日以内 && すでにpostに対して評価していなかったら  %>
-  <%# if @posts.since(7.days) && !current_user.has_make_point?(@post) %>
+<h3>開催日から1週間以内に、他プレイヤーを評価できます。</h3>
+  <ul>
     <% @posts.each do |post| %>
-        <li>
-          <div>タイトル：<%= post.title %>&emsp;主催者：<%= post.user.name %></div>
-          <div>開催日：<%= post.event_date %>&emsp;会　場：<%= post.place %>&emsp;競　技：<%= post.sports %></div>
+      <li>
+        <div>タイトル：<%= post.title %>&emsp;
+          <% if post.user.unsubscribe? %>
+            主催者：<span class="label label-danger">退会したユーザー</span>
+          <% else %>
+            主催者：<%= post.user.name %>
+          <% end %>
+        </div>
+        <div>開催日：<%= post.event_date %>&emsp;会場名：<%= post.place %>&emsp;競　技：<%= post.sports %></div>
+        <% if post.user.unsubscribe? %>
+          <span class="label label-danger">主催者退会のため、評価できません</span>
+        <% else %>
           <div>
             <% if current_user.has_make_point?(post) %>
               評価済みです。
@@ -12,8 +20,7 @@
               <%= link_to "評価対象の参加者一覧へ", finished_users_user_path(@user, post_id: post.id) %>
             <% end %>
           </div>
-        </li><br>
+        <% end %>
+      </li><br>
     <% end %>
-  <%# end %>
-  <%# end %>
-</ul>
+  </ul>

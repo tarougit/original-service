@@ -1,20 +1,24 @@
-<ul>
-  <% post.users.each do |user| %>
+<ol>
+  <% post.users.each do |user| %><br>
+    <% if user.unsubscribe? %>
+      <li><%= user.name %>&emsp;<span class="label label-danger">退会したユーザー</span></li>
+    <% else %>
       <li>
         <%= link_to user.name, user %>
         <span>
           <% unless post.has_approved?(user) %>
-            <%= form_for(post.relationships.find_by(user_id: user.id)) do |f| %>
+            <%= form_for(post.relationships.find_by(user_id: user.id)) do |f| %><br>
               <%= f.hidden_field :status, value: 1 %>
               <%= f.submit "承 認", class:"btn btn-primary" %>
             <% end %>
           <% else %>
-            <%= form_for(post.relationships.find_by(user_id: user.id)) do |f| %>
+            <%= form_for(post.relationships.find_by(user_id: user.id)) do |f| %><br>
               <%= f.hidden_field :status, value: 0 %>
-              <%= f.submit "拒 否", class:"btn btn-danger" %>
+              <%= f.submit "拒 否", class:"btn btn-danger", data: { confirm: "本当に参加を拒否しますか？" } %>
             <% end %>
           <% end %>
         </span>
       </li>
+    <% end %><br>
   <% end %>
-</ul>
+</ol><br><br>

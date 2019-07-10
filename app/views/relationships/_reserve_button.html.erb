@@ -1,4 +1,4 @@
-<% if @post.event_date > Time.now %>
+<% if @post.date_yet? || @post.same_date? && @post.time_yet? %>
   <% unless current_user == @post.user %>
     <% if current_user.relationship?(post) %>
       <%= form_for(current_user.relationships.find_by(post_id: post.id), html: { method: :delete }) do |f| %>

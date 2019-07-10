@@ -1,7 +1,9 @@
-<ul>
-  <% @finished_users.each do |user| %>
-    <li><%= user.name %>&emsp;<%= link_to "参加者を評価する", post_evaluate_user_path(user, post_id: @post.id) %></li>
-  <% end %>
-</ul>
+<h3>評価できるのは、１プレイヤー１ポイント１回のみです。</h3><br>
+  <ul>
+    評価する参加者を選んでください
+    <% @finished_users.each do |user| %>
+      <li><%#= user.name %><!-- &emsp; --><%= link_to user.name, post_evaluate_user_path(user, post_id: @post.id) %></li>
+    <% end %>
+  </ul>
 
 <%= link_to "前の画面に戻る", finished_posts_user_path(current_user) %>

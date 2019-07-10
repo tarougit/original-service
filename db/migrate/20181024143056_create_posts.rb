@@ -10,7 +10,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.time :closed
       t.date :due_date
       t.time :due_time
-      t.string :erea
+      t.references :area, foreign_key: true
       t.string :place
       t.integer :capacity
       t.integer :cost
@@ -18,7 +18,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
       t.integer :age_minimum
       t.integer :age_maximum
       t.string :sex
-      t.integer :status, default: 0, null: false
+      t.integer :reserve, default: 0
 
       t.timestamps
     end

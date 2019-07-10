@@ -17,11 +17,14 @@
           <%= render 'profiles/profile', profile: @profile %>
         </div>
         <ul class="nav nav-pills nav-stacked">
-          <li><%= link_to "募集する", posts_path %></li>
+          <% if @user == current_user %>
+            <li><%= link_to "募集する", posts_path(@user) %></li>
+          <% end %>
           <!--<li class="<%#= 'active' if current_page?(user_path(@user)) %>"><%#= link_to posts_path(@posts) do %>個人参加募集<span class="badge"><%#= @count_posts %></span><%# end %></li> -->
             <!-- <li role="presentation" class="active"><a href="#">個人参加募集</a></li> -->
-          <li><%= link_to "募集に応募する", posts_path %></li>
-            
+          <% if @user == current_user %>
+            <li><%= link_to "募集に応募する", posts_path %></li>
+          <% end %>  
           <%# if @user.profile.present? %>
       		  <!-- <li><%#= link_to "プロフィール変更", user_profiles_path(@user) %></li>
       		<%# else %>
@@ -83,14 +86,14 @@
   <div class="row">
     <aside class="col-xs-12">
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="center">個人参加募集</div>
-        </div>
-        <div class="panel-body">
-          <%#= render 'posts/posts', posts: @posts %>
-          <%= link_to "募集管理ページ", post_users_user_path %><br>
-          <%#= link_to "参加者リスト", users_path %>
-        </div>
+        <% if @user == current_user %>
+          <div class="panel-heading">
+            <div class="center">投稿した募集一覧</div>
+          </div>
+          <div class="panel-body">
+            <%= link_to "募 集 管 理", post_users_user_path(@user) %><br>
+          </div>
+        <% end %>
       </div>
     </aside>
   </div>
@@ -98,17 +101,22 @@
   <div class="row">
     <aside class="col-xs-12">
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="center">個人参加応募</div>
-        </div>
-        <div class="panel-body">
-          <%= link_to "個人参加応募一覧", relationship_posts_user_path %>
-        </div>
+        <% if @user == current_user %>
+          <div class="panel-heading">
+            <div class="center">募集に応募した一覧</div>
+          </div>
+          <div class="panel-body">
+            <%= link_to "応 募 管 理", relationship_posts_user_path(@user) %>
+          </div>
+        <% end %>
       </div>
     </aside>
   </div>
   
-  <div class="pull-right"><%= link_to '退　会', user_path(current_user), method: :delete, class:"btn btn-danger", data: { confirm: "本当に退会しますか？" } %></div>
+  <% if @user == current_user %>
+    <div class="pull-right"><%= link_to '退　会', user_path(@user), method: :delete, class:"btn btn-danger", data: { confirm: "本当に退会しますか？" } %></div>
+  <% end %>
+  
   <canvas id="testCanvas">
   
   <script>
@@ -116,7 +124,7 @@
   var myRadarChart = new Chart(ctx, {
       type: 'radar',
       data: {
-          labels: ["ドリブル", "シュート", "スピード", "パス", "判断力", "体の使いかた"],
+          labels: ["ドリブル", "パス", "シュート", "状況判断", "テクニック", "ディフェンス"],
           datasets: [{
               label: 'ステータス',
               // data: [12, 19, 3, 5, 2, 3],
@@ -147,7 +155,7 @@
         },
         ticks: { //http://www.chartjs.org/docs/#scales-radial-linear-scale
           stepSize: 1, // 目盛の間隔
-          max: 10, //最大値
+          max: 100, //最大値
           beginAtZero: true
         }
       }
@@ -158,6 +166,6 @@
   退会済みです。
   <%= form_for(@user) do |f| %>
     <%= hidden_field_tag :state, 1 %>
-    <%= f.submit "公開に戻す" %>
+    <%= f.submit "登録を復活する" %>
   <% end %>
 <% end %>

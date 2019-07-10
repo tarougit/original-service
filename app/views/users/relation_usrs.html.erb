@@ -1,4 +1,7 @@
 <% @relation_users.each |user| %>
-  
-  <%= user.inspect %>
+  <% if user.unsubscribe? %>
+    <%= user.name %><span class="label label-danger">退会したユーザー</span>
+  <% else %>
+    <%= user.name %>
+  <% end %>
 <% end %>

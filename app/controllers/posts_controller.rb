@@ -3,13 +3,7 @@ class PostsController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
   
   def index
-    #if @post.open > Time.now
-    @posts = Post.all
-    #end
-    #@sports = Post.group(:sports).pluck(:sports).sort
-    #@erea = Post.group(:erea).pluck(:erea).sort
-    #@event_date = Post.group(:event_date).pluck(:event_date).sort
-    #@level = Post.group(:level).pluck(:level).sort
+    @posts = Post.all.page(params[:page]).per(3)
   end
 
   def show
@@ -57,15 +51,10 @@ class PostsController < ApplicationController
     end
   end
 
-  def destroy
-    @post.destroy
-    flash[:success] = '募集を削除しました。'
-    redirect_to posts_url
-  end
-  
-  #def evaluated_posts
-    #@user = User.find(params[:id])
-    #@evaluated_posts = @user.post_users.relationship_posts(params[:post_id])
+  #def destroy
+    #@post.destroy
+    #flash[:success] = '募集を削除しました。'
+    #redirect_to posts_url
   #end
   
   def relation_users
@@ -102,7 +91,7 @@ class PostsController < ApplicationController
   
   # Strong Parameter
   def post_params
-    params.require(:post).permit(:sports, :title, :content, :event_date, :open, :closed, :due_date, :due_time, :erea, :place, :capacity, :cost, :level, :age_minimum, :age_maximum, :sex, :reserve)
+    params.require(:post).permit(:sports, :title, :content, :event_date, :open, :closed, :due_date, :due_time, :area_id, :place, :capacity, :cost, :level, :age_minimum, :age_maximum, :sex, :reserve)
   end
   
   def correct_user

@@ -3,6 +3,7 @@ class CreateRelationships < ActiveRecord::Migration[5.0]
     create_table :relationships do |t|
       t.references :user, foreign_key: true
       t.references :post, foreign_key: true
+      t.integer :status, default: 0
 
       t.timestamps
       

@@ -1,5 +1,5 @@
-<% if @post.user == nil %>
- <span class="label label-danger">[退会したユーザー]</span>の募集内容
+<% if @post.user.unsubscribe? %>
+  <span class="label label-danger">退会したユーザー</span>の募集内容
 <% else %>
   <h1><span class="label label-success"><%= @post.user.name %></span> の募集内容</h1>
 <% end %>
@@ -12,26 +12,31 @@
 <p>終了時間：<%= @post.closed.strftime("%H時:%M分") %></p>
 <p>締切日：<%= @post.due_date.strftime("%Y年 %m月 %d日") %></p>
 <p>締切時間：<%= @post.due_time.strftime("%H時:%M分") %></p>
-<p>開催エリア：<%= @post.erea %></p>
-<p>会　場：<%= @post.place %></p>
-<p><%= @post.reserve %></p>
+<p>開催エリア：<%= @post.area.name %></p>
+<p>会場名：<%= @post.place %></p>
 <p>募集定員：<%= @post.capacity %></p>
 <p>費　用：<%= @post.cost %></p>
 <p>レベル：<%= @post.level %></p>
 <p>年齢層：<%= @post.age_minimum %>&emsp;～&emsp;<%= @post.age_maximum %></p>
 <p>性　別：<%= @post.sex %></p>
 
-<% if @post.user != nil %>
-  <%= render 'relationships/reserve_button', post: @post %><br><br>
+<%# if @post.user != nil %>
+  <%#= render 'relationships/reserve_button', post: @post %><!-- <br><br> -->
+<%# else %>
+  <!-- <span class="btn btn-danger">[退会者が主催していたゲームのため、応募できません]</span><br><br> -->
+<%# end %>
+
+<% if @post.user.unsubscribe? %>
+  <span class="label label-danger">主催者が退会したので、応募できません</span><br><br>
 <% else %>
-  <span class="btn btn-danger">[退会者が主催していたゲームのため、応募できません]</span><br><br>
+  <%= render 'relationships/reserve_button', post: @post %><br><br>
 <% end %>
 
 <%= link_to '募集一覧に戻る', posts_path %><br>
 <% if (current_user == @post.user) %>
   <% if @post.event_date > Time.now %>
-    <%= link_to 'この募集内容を編集する', edit_post_path(@post) %><br>
-    <%= link_to 'この募集を削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
+    <%= link_to '募集内容の編集、中止告知', edit_post_path(@post) %><br>
+    <%#= link_to 'この募集を削除する', @post, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
     <%#= render 'relationships/discontinue_button', post: @post %> <!-- 中止ボタン -->
     <%= render 'relationships/relationship_users', post: @post %>
   <% end %>

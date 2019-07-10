@@ -1,15 +1,21 @@
-<h1>個人参加募集一覧</h1>
+<h1>サッカー、フットサル参加者募集一覧</h1><br><br>
 
-<%# if (@posts.user.due_date || @posts.user.capacity != @posts.due_date || @posts.posts.capacity) %>
+開催エリア
+<%= form_tag(root_path, method: :get) do %>
+  <%= collection_select :area_id, nil, Area.all, :id, :name, { include_blank: true }, {} %> 
+  <%= submit_tag '探す' %>&emsp; &emsp; &emsp;<%= link_to '新しく募集する', new_post_path %>
+<% end %><br><br>
+
   <ul>
     <% @posts.each do |post| %>
-      <li><%= post.sports %>&emsp;<%= link_to post.title, post %></li>
-      <div><%= post.erea %>&emsp;レベル：<%= post.level %></div>
-      <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>
-      &emsp;時間帯：<%= post.open.strftime("%H時:%M分") %>
-      ～<%= post.closed.strftime("%H時:%M分") %></div>
+      <%# if post.event_date.since(8.days) >= Time.now %>
+        <li><%= post.sports %>&emsp;<%= link_to post.title, post %></li>
+        <div><%= post.area.name %>&emsp;レベル：<%= post.level %></div>
+        <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>
+        &emsp;時間帯：<%= post.open.strftime("%H時:%M分") %>
+        ～<%= post.closed.strftime("%H時:%M分") %></div><br>
+      <%# end %>
     <% end %>
-  </ul>
+  </ul><br><br>
 <%# end %>
-
-<%= link_to '新規募集の投稿', new_post_path %>
+<%= paginate @posts %>

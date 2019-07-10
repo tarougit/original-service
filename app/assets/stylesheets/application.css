@@ -17,3 +17,42 @@
 .center {
   text-align: center;
 }
+
+.navbar {
+  background: radial-gradient(#ffffff, #0000ff);
+}
+
+.navbar-brand small {
+  position: relative;
+  bottom: 30%;
+  color: #ff0000;
+  font-size: 23px;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.navbar .navbar-brand {
+  color: #ffffff;
+  font-size: 300%;
+  position: absolute;
+  top: 50%;
+  transform: translate(0px, -50%)
+}
+
+.navbar .navbar-nav > li > a {
+  color: #ffffff;
+}
+
+.message1 {
+  font-size: 150%;
+  color: #0000ff;
+  font-weight: bold;
+}
+
+.message2 {
+  font-size: 130%;
+}
+
+.under {
+  background: linear-gradient(transparent 50%, #ffff00 50%);
+}

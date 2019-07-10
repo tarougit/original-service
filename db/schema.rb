@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190602060652) do
+ActiveRecord::Schema.define(version: 20181202112210) do
+
+  create_table "areas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "hexagons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
@@ -41,7 +47,7 @@ ActiveRecord::Schema.define(version: 20190602060652) do
     t.time     "closed"
     t.date     "due_date"
     t.time     "due_time"
-    t.string   "erea"
+    t.integer  "area_id"
     t.string   "place"
     t.integer  "capacity"
     t.integer  "cost"
@@ -49,34 +55,35 @@ ActiveRecord::Schema.define(version: 20190602060652) do
     t.integer  "age_minimum"
     t.integer  "age_maximum"
     t.string   "sex"
+    t.integer  "reserve",                   default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
-    t.integer  "reserve",                   default: 0
+    t.index ["area_id"], name: "index_posts_on_area_id", using: :btree
     t.index ["user_id"], name: "index_posts_on_user_id", using: :btree
   end
 
   create_table "profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
     t.string   "icon"
     t.string   "active_area"
     t.string   "sex"
     t.date     "birthday"
     t.string   "sports"
     t.string   "level"
+    t.string   "level_maximum"
     t.text     "battle_record", limit: 65535
     t.text     "career",        limit: 65535
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "user_id"
-    t.string   "level_maximum"
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
   end
 
   create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "post_id"
+    t.integer  "status",     default: 0
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "status",     default: 0
     t.index ["post_id"], name: "index_relationships_on_post_id", using: :btree
     t.index ["user_id", "post_id"], name: "index_relationships_on_user_id_and_post_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_relationships_on_user_id", using: :btree
@@ -86,14 +93,16 @@ ActiveRecord::Schema.define(version: 20190602060652) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
+    t.integer  "state",           default: 1
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "state",           default: 1
   end
 
   add_foreign_key "points", "hexagons"
   add_foreign_key "points", "posts"
   add_foreign_key "points", "users"
+  add_foreign_key "points", "users", column: "evaluate_user_id"
+  add_foreign_key "posts", "areas"
   add_foreign_key "profiles", "users"
   add_foreign_key "relationships", "posts"
   add_foreign_key "relationships", "users"

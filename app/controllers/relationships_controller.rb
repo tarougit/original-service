@@ -4,7 +4,7 @@ class RelationshipsController < ApplicationController
   def create
     post = Post.find(params[:post_id])
     current_user.relationship(post)
-    flash[:success] = '応募しました。'
+    flash[:success] = '応募しました。マイページの「応募管理」で、投稿者からの「承認」を確認して参加してください。'
     redirect_back(fallback_location: root_path)
   end
 
@@ -20,9 +20,9 @@ class RelationshipsController < ApplicationController
 
     if @relation.update(relationship_params)
       if (@relation.status == 1)
-         flash[:success] = "承認しました。"
+         flash[:success] = "参加を承認しました。"
       else
-         flash[:danger] = "拒否しました。"
+         flash[:danger] = "参加を拒否しました。"
       end
       redirect_back(fallback_location: root_url)
     else
@@ -30,13 +30,6 @@ class RelationshipsController < ApplicationController
       redirect_back(fallback_location: root_url)
     end
   end
-  
-  #def discontinue_post
-    #post = Post.find(params[:post_id])
-    #current_user.discontinue_post(post)
-    #flash[:success] = '中止しました'
-    #redirect_back(fallback_location: root_path)
-  #end
   
   private
   

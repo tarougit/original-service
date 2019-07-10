@@ -1,7 +1,9 @@
-<% @post_users.each do |post| %>
-          
-    <%= post.inspect %><br><br>
-    <%= 'active' if current_page?(relation_users_post_path(post)) %><%= link_to relation_users_post_path(post) do %>承認ユーザー一覧 <span class="badge"><%#= @count_relationship_users %></span><% end %>
-    <%= render 'relationships/relationship_users', post: post %><br><br>
-    <%#= link_to '承認ユーザー一覧', relation_users_user_path %><br><br>
-<% end %>
+<h3>募集管理：開催日当日まで表示されます。</h3><br>
+  <% @post_users.each do |post| %>
+    <%# if post.event_date.since(30.days) >= Time.now %> 
+      <div>タイトル：<%= post.title %>&emsp;開催日：<%= post.event_date %>&emsp;会場名：<%= post.place %>&emsp;競　技：<%= post.sports %></div>
+      <%= link_to '詳　細', post %><br><br>
+      <%= 'active' if current_page?(relation_users_post_path(post)) %><%= link_to relation_users_post_path(post) do %>承認した応募者一覧 <span class="badge"></span><% end %>
+      <%= render 'relationships/relationship_users', post: post %>
+    <%# end %>
+  <% end %>

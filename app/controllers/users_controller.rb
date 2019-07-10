@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :edit, :update, :relationships, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   
   def show
     @user = User.find(params[:id])
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
     if params[:state].present?
       @user.state = params[:state].to_i
       @user.save
-      flash[:success] = 'ユーザを復活しました。'
+      flash[:success] = '登録が復活しました。'
       redirect_to @user
     elsif @user.update(user_params)
       flash[:success] = 'ユーザを更新しました。'
@@ -70,24 +71,14 @@ class UsersController < ApplicationController
   
   def post_users #募集投稿
     @user = User.find(params[:id])
-    #@relationships = Relationship.users.page(params[:page])
     @post_users = @user.posts
-    #counts(@relationship)
+    @post_users = @post_users.map{|o| o if o.event_date > (Date.current - 1) }.compact
   end
   
   def relationship_posts #応 募
     @user = User.find(params[:id])
     @relationship_posts = @user.relationship_posts.page(params[:page])
-    
-    #if (current_user.has_status?(@relationship_posts))
-      #flash[:alart] = '応募が承認されました'
-      #redirect_back(fallback_location: root_url)
-      #return
-    #else
-      #flash[:danger] = 'まだ承認されていません'
-      #redirect_back(fallback_location: root_url)
-      #return
-    #end
+    @relationship_posts = @relationship_posts.map{|o| o if o.event_date > (Date.current - 7) }.compact
   end
   
   #def profile #プロフィール設定
@@ -97,18 +88,8 @@ class UsersController < ApplicationController
   
   def finished_posts #開催されたイベント(募集、応募 両方表示できるようにする)
     @user = User.find(params[:id])
-    
-    reftime = Time.now.next_day.beginning_of_day.strftime("%Y-%m-%d")
-    @post_users = @user.posts.where("event_date < '#{reftime}'") ##終了したPostだけしゅとく
-    @relationship_posts = @user.relationship_posts.where("event_date < '#{reftime}'") #応募して終了したゲーム会
-   # relation_posts = @post_users.approved_users || @relationship_posts.approved_users
-   # current_relation_posts = current_user.post_users.approved_users || current_user.relationship_posts.approved_users
-    #post_ids = []
-    #relation_posts.each do |post|
-    #  post_ids << post.id if current_relation_posts.includ?(post)
-    #end
-    ids = post_users.ids + relationship_posts.ids
-    @posts = Post.find(ids).sort_by{|o| ids.index(o.event_date)}
+    @posts = @user.posts + @user.relationship_posts.includes(:relationships).where(relationships: {status: 1})
+    @posts = @posts.map{|o| o if o.event_date > (Date.current - 7) && o.event_date < Date.current }.compact
   end
   
   #def finished_posts #開催されたイベント(募集、応募 両方表示する)
@@ -175,15 +156,14 @@ class UsersController < ApplicationController
     redirect_to current_user
   end
   
-  #def relation_users #承認されたユーザー一覧
-    #@user = User.find(params[:id])
-    #@relationship = @user.relationships.where(status: 1)
-    #@relation_users = @relationship.relation_users
-  #end
-  
   private
   
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+  
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless @user == current_user
   end
 end

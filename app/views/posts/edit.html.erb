@@ -1,4 +1,4 @@
-<h1>id: <%= @post.id %> のメッセージ編集ページ</h1>
+<h1>タイトル：<%= @post.title %> の募集を編集する</h1><br><br>
 
 <ol>
     <%= form_for(@post) do |f| %>
@@ -6,7 +6,9 @@
           <%= f.select :sports, [["サッカー"], ["フットサル"]] ,class:"form-control" %></li>
     
       <li><%= f.label :title, '募集のタイトル' %>
-          <%= f.text_field :title %></li>
+          <%= f.text_field :title %><br>
+          <p><span class="text-danger">※中止の場合は、タイトルの文頭に【中　止】と入力してくさい。</span></p>
+          <p><span class="text-danger">&emsp;応募者がいる場合は、マイページの募集管理で「拒　否」設定にしてください。</span></p></li>
       
       <li><%= f.label :content, '募集内容' %>
           <%= f.text_field :content %></li>
@@ -25,18 +27,11 @@
       <li><%= f.label :due_time, '締切時間' %>
           <%= f.time_select :due_time, :minute_step => 10 %></li>
           
-      <li><%= f.label :erea, '開催エリア' %>
-          <%= f.text_field :erea %></li>
+      <li><%= f.label :area, '開催エリア' %>
+          <%= f.text_field :area_id %></li>
           
-      <li><%= f.label :place, '会　場' %><spacer>
-          &emsp;会場を
-          <%= f.radio_button :reserve, "0" %>
-          <%= f.label :reserve, "予約済み" %>
-          <%= f.radio_button :reserve, "1" %>
-          <%= f.label :reserve, "予約していない" %>
-          <!-- <input type="radio" name="予約済み" value="0">
-          <input type="radio" name="予約していない" value="1"> -->
-          &emsp;会場名<%= f.text_field :place %></li>
+      <li><%= f.label :place, '会場名' %><spacer>
+          <%= f.text_field :place %></li>
           
       <li><%= f.label :capacity, '定　員' %>
           <%= f.text_field :capacity %></li>
@@ -45,19 +40,18 @@
           <%= f.text_field :cost %></li>
           
       <li><%= f.label :level, 'レベル' %>
-          <%= f.select :level, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]] %>～</li>
+          <%= f.select :level, [["1 初級"], ["2 初級"], ["3 初級"], ["4 中級"], ["5 中級"], ["6 中級"], ["7 上級"], ["8 上級"], ["9 上級"], ["10 上級"]] %></li>
           
-      
       <li><%= f.label :age_minimum, '参加者年齢' %>
           <%= f.select :age_minimum, [["10"], ["20"], ["30"], ["40"], ["50"], ["60"], ["70"], ["80"]] %>
           <%= f.label :age_maximum, "～" %>
           <%= f.select :age_maximum, [["10"], ["20"], ["30"], ["40"], ["50"], ["60"], ["70"], ["80"]] %></li>
       
       <li><%= f.label :sex, :"参加者性別" %>
-          <%= f.select :sex, [["男"], ["女"], ["男女ミックス"]] ,class:"form-control" %></li>
+          <%= f.select :sex, [["男"], ["女"], ["男女ミックス"]] ,class:"form-control" %></li><br>
           
-      <%= f.submit '編集して投稿' %>
+      <%= f.submit '編集して投稿する' %>
     <% end %>
-</ol>
+</ol><br><br>
 
 <%= link_to '募集一覧に戻る', posts_path %>

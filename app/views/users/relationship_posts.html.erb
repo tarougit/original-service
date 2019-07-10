@@ -1,15 +1,21 @@
-<% @relationship_posts.each do |post| %>
-  
-  <div><%= post.sports %>&emsp;<%= post.title %>&emsp;<%= post.user.name %></div>
-  <div><%= post.erea %>&emsp;レベル：<%= post.level %></div>
-  <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>
-  &emsp;時間帯：<%= post.open.strftime("%H時:%M分") %>
-  ～<%= post.closed.strftime("%H時:%M分") %></div>
-  <%= link_to '詳　細', post %><br><br>
-  
-  <% if current_user.has_status?(post) %>
-    <span class="label label-primary">応募が承認されました</span>
-  <% else %>
-    <span class="label label-danger">応募はまだ、承認されていません</span>
+<h3>応募管理：開催日から１週間表示されます。</h3><br>
+  <% @relationship_posts.each do |post| %>
+    <div><%= post.sports %>&emsp;<%= post.title %>&emsp;
+      <% if post.user.unsubscribe? %>
+        主催者：<span class="label label-danger">退会したユーザー</span>
+      <% else %>
+        <%= post.user.name %>
+      <% end %>
+    </div>
+    <div><%= post.area.name %>&emsp;レベル：<%= post.level %></div>
+    <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>
+    &emsp;時間帯：<%= post.open.strftime("%H時:%M分") %>
+    ～<%= post.closed.strftime("%H時:%M分") %></div>
+    <%= link_to '詳　細', post %><br>
+      
+    <% if current_user.has_status?(post) %>
+      <span class="label label-primary">応募が承認されました。</span>
+    <% else %>
+      <span class="label label-danger">応募はまだ、承認されていません。</span>
+    <% end %><br><br><br>
   <% end %>
-<% end %>

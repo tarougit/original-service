@@ -1,4 +1,20 @@
+<div class="center">
+  <div class="message1">
+    <div>サッカー、フットサルを共にプレイし、評価し合う!</div>
+  </div>
+</div>
 
+<div class="center">
+  <div class="message2">
+    <small>あなたの<span class="under">プレイが評価される</span>と、グラフ化されていきます。</small>
+  </div>
+</div>
+
+開催エリア
+<%= form_tag(root_path, method: :get) do %>
+  <%= collection_select :area_id, nil, Area.all, :id, :name, { include_blank: true }, {} %> 
+  <%= submit_tag '探す' %>
+<% end %>
   <!-- <div class="center">
     <div class="col-xs-12">
       <div style="float:center;">
@@ -20,18 +36,22 @@
       </div>
     </div>
   </div> -->
-  <div class="center">
-    <div class="col-xs-12">
-      <div style="float:center;">
-        <div class="panel panel-default">
-          <div class="panel-heading">サッカー、フットサル参加者募集情報</div>  
-            <div class="panel-body">
-              <% @posts.each do |post| %>
+<div class="center">
+  <div class="col-xs-12">
+    <div style="float:center;">
+      <div class="panel panel-default">
+        <div class="panel-heading">サッカー、フットサル参加者募集情報</div>  
+          <div class="panel-body">
+            <% @posts.each do |post| %>
+              <%# if post.event_date.since(8.days) >= Time.now %>
                 <div>競　技：<%= post.sports %>&emsp;レベル：<%= post.level %>&emsp;<%= link_to post.title, post %></div>
-                <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>&emsp;開催エリア：<%= post.erea %></di><br><br>
-              <% end %>
-            </div>
-        </div>
+                <div>開催日：<%= post.event_date.strftime("%Y年 %m月 %d日") %>&emsp;開催エリア：<%= post.area.name %></di><br><br>
+              <%# end %>
+            <% end %>
+          </div>
       </div>
     </div>
   </div>
+</div>
+
+<%= paginate @posts %>
